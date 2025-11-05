@@ -1,0 +1,4 @@
+[Buttons in Jetpack Compose]
+https://www.youtube.com/watch?v=Xx3s7YReM1M
+[Start a New Activity using Intent in Android using Jetpack Compose]
+https://www.geeksforgeeks.org/kotlin/start-a-new-activity-using-intent-in-android-using-jetpack-compose
