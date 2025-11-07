@@ -18,8 +18,8 @@ import com.project.learnasl.ui.theme.LearnASLTheme
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 
@@ -28,10 +28,17 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            LearnASLTheme {
-                val context = LocalContext.current
-
-                ColumnOfButtons(context)
+            LearnASLTheme(
+                // darkTheme = true // uncomment to see the app in darkTheme
+            ) {
+                Surface(
+                    // fills the background of the app
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    val context = LocalContext.current
+                    ColumnOfButtons(context)
+                }
             }
         }
     }
@@ -57,9 +64,9 @@ fun ColumnOfButtons(context: Context) {
             shape = RoundedCornerShape(20.dp),
             enabled = true,
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(122,31,61), // background
-                contentColor = Color.White // text
-            )
+                containerColor = MaterialTheme.colorScheme.primary, // background
+                contentColor = MaterialTheme.colorScheme.onPrimary // text
+            ),
         ) {
             Text(
                 text = "Quiz",
@@ -76,8 +83,8 @@ fun ColumnOfButtons(context: Context) {
             shape = RoundedCornerShape(20.dp),
             enabled = true,
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(122,31,61), // background
-                contentColor = Color.White // text
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary
             )
         ) {
             Text(
@@ -95,8 +102,8 @@ fun ColumnOfButtons(context: Context) {
             shape = RoundedCornerShape(20.dp),
             enabled = true,
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(122,31,61), // background
-                contentColor = Color.White // text
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary
             )
         ) {
             Text(
