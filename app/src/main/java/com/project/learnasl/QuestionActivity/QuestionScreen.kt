@@ -2,6 +2,7 @@ package com.project.learnasl.QuestionActivity
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -76,7 +77,7 @@ fun QuestionScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-            //.background(MaterialTheme.colorScheme.primary)
+                .background(MaterialTheme.colorScheme.background)
         ) {
             item {
                 // header
@@ -89,7 +90,8 @@ fun QuestionScreen(
                     IconButton(onClick = { onBackClick }) {
                         Icon(
                             painter = painterResource(R.drawable.go_back),
-                            contentDescription = "Go back button"
+                            contentDescription = "Go back button",
+                            tint = MaterialTheme.colorScheme.onBackground,
                         )
                     }
                     Spacer(Modifier.width(16.dp))
@@ -97,7 +99,7 @@ fun QuestionScreen(
                     Text(
                         text = "Quiz mode",
                         fontSize = 20.sp,
-                        //color = MaterialTheme.colorScheme.primary,
+                        color = MaterialTheme.colorScheme.onBackground,
                         //fontWeight = FontWeight.Bold,
                         style = MaterialTheme.typography.labelLarge
                     )
@@ -117,7 +119,7 @@ fun QuestionScreen(
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.weight(1f),
-                        //color = MaterialTheme.colorScheme.onPrimary,
+                        color = MaterialTheme.colorScheme.onBackground,
                         style = MaterialTheme.typography.labelLarge
                     )
                     // buttons that enable user to move through questions (back and next)
@@ -131,7 +133,8 @@ fun QuestionScreen(
                     ) {
                         Icon(
                             painterResource(R.drawable.left_arrow),
-                            contentDescription = ""
+                            contentDescription = String(),
+                            tint = MaterialTheme.colorScheme.onBackground,
                         )
                     }
                     IconButton(
@@ -147,7 +150,8 @@ fun QuestionScreen(
                     ) {
                         Icon(
                             painterResource(R.drawable.right_arrow),
-                            contentDescription = ""
+                            contentDescription = String(),
+                            tint = MaterialTheme.colorScheme.onBackground,
                         )
                     }
                 }
@@ -161,9 +165,9 @@ fun QuestionScreen(
                         .padding(horizontal = 24.dp)
                         .height(14.dp)
                         .clip(RoundedCornerShape(50)),
-                    color = MaterialTheme.colorScheme.primary,
+                    color = MaterialTheme.colorScheme.primaryContainer,
                     // ProgressIndicatorDefaults.linearTrackColor
-                    trackColor = MaterialTheme.colorScheme.primaryContainer,
+                    trackColor = MaterialTheme.colorScheme.primary,
                     strokeCap = ProgressIndicatorDefaults.LinearStrokeCap,
                 )
             }
@@ -175,7 +179,7 @@ fun QuestionScreen(
                         .fillMaxWidth()
                         .padding(24.dp),
                     textAlign = TextAlign.Center,
-                    //color = MaterialTheme.colorScheme.onPrimary,
+                    color = MaterialTheme.colorScheme.onBackground,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold
                 )

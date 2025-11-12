@@ -27,6 +27,7 @@ class QuizActivity : ComponentActivity() {
 //                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 //
 //                }
+
             }
         }
     }
