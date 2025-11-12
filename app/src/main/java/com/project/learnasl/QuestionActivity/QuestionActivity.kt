@@ -6,6 +6,7 @@ import android.view.View
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.project.learnasl.MainActivity
 import com.project.learnasl.QuestionActivity.Model.QuestionModel
 import com.project.learnasl.R
 import com.project.learnasl.ScoreActivity.ScoreActivity
@@ -26,7 +27,11 @@ class QuestionActivity : AppCompatActivity() {
             LearnASLTheme {
                 QuestionScreen(
                     questions = receivedList,
-                    onBackClick = { finish() },
+                    onBackClick = {
+                        finish()
+                        val intent= Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                       },
                     onFinish = {
                         finalScore-> val intent= Intent(this, ScoreActivity::class.java)
                         intent.putExtra("Score", finalScore)

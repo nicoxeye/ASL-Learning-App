@@ -87,7 +87,7 @@ fun QuestionScreen(
                         .padding(24.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {    // go back button
-                    IconButton(onClick = { onBackClick }) {
+                    IconButton(onClick = onBackClick ) {
                         Icon(
                             painter = painterResource(R.drawable.go_back),
                             contentDescription = "Go back button",

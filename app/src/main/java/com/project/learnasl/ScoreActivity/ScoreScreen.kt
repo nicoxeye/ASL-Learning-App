@@ -1,5 +1,7 @@
 package com.project.learnasl.ScoreActivity
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -22,10 +24,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.project.learnasl.R
 import androidx.compose.ui.platform.LocalContext
+import com.project.learnasl.MainActivity
+import com.project.learnasl.QuestionActivity.QuestionActivity
+import com.project.learnasl.QuizActivity
 import com.project.learnasl.ui.theme.LearnASLTheme
 
 @Composable
-fun ScoreScreen(score: Int, onBackToMain:()->Unit)
+fun ScoreScreen(score: Int, context: Context)
 {
     LearnASLTheme {
         Box(
@@ -60,15 +65,27 @@ fun ScoreScreen(score: Int, onBackToMain:()->Unit)
                     modifier = Modifier.padding(top=8.dp)
                 )
                 Button(
-                    onClick = onBackToMain,
+                    onClick = { startNewQuiz(context) },
                     modifier = Modifier
                         .padding(top=16.dp),
                     colors = ButtonDefaults.buttonColors(
-                        MaterialTheme.colorScheme.primaryContainer
+                        MaterialTheme.colorScheme.primary
+                    ), shape= RoundedCornerShape(8.dp)
+                ) {
+                    Text(text="Try again",
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        style= MaterialTheme.typography.labelLarge)
+                }
+                Button(
+                    onClick = { goBackToMain(context) },
+                    modifier = Modifier
+                        .padding(top=16.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        MaterialTheme.colorScheme.primary
                     ), shape= RoundedCornerShape(8.dp)
                 ) {
                     Text(text="Back to Main",
-                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                        color = MaterialTheme.colorScheme.onPrimary,
                         style= MaterialTheme.typography.labelLarge)
                 }
             }
@@ -76,10 +93,18 @@ fun ScoreScreen(score: Int, onBackToMain:()->Unit)
     }
 }
 
+// credits to niki for this idea for handling multiple buttons:D (taken from MainActivity)
+fun goBackToMain(context: Context) {
+    context.startActivity(Intent(context, MainActivity::class.java))
+}
 
+fun startNewQuiz(context: Context) {
+    context.startActivity(Intent(context, QuizActivity::class.java))
+}
 
 @Preview
 @Composable
 fun ScoreScreenPreview(){
-    ScoreScreen(score=5, onBackToMain = {})
+    val context = LocalContext.current
+   // ScoreScreen(score=5, context = startNewQuiz(context))
 }

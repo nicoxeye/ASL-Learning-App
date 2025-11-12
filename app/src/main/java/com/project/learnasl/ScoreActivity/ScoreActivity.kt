@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import com.project.learnasl.MainActivity
 import com.project.learnasl.R
@@ -20,10 +21,12 @@ class ScoreActivity : AppCompatActivity() {
         //val context = LocalContext.current
         setContent {
             LearnASLTheme {
-                ScoreScreen(score=score) {
-                    startActivity(Intent(this, MainActivity::class.java))
-                    finish()
-                }
+                val context = LocalContext.current
+                ScoreScreen(score = score, context=context)
+//                ScoreScreen(score=score) {
+//                    startActivity(Intent(this, MainActivity::class.java))
+//                    finish()
+//                }
             }
         }
     }
