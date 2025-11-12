@@ -75,8 +75,8 @@ fun AnswerItem(
                     Icon(
                         painter = it,
                         contentDescription = null,
-                        //tint = Color.Unspecified,
-                        modifier = Modifier.size(24.dp)
+                        modifier = Modifier.size(24.dp),
+                        tint = MaterialTheme.colorScheme.onSecondary
                     )
                 }
             }
