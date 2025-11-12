@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LearnASL">
         <activity
+            android:name=".ScoreActivity.ScoreActivity"
+            android:exported="false" />
+        <activity
             android:name=".QuestionActivity.QuestionActivity"
             android:exported="false" />
         <activity

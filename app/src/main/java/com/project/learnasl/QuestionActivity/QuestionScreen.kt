@@ -48,7 +48,7 @@ import com.project.learnasl.ui.theme.LearnASLTheme
 @Composable
 fun QuestionScreen(
     questions:List<QuestionModel>,
-    onFinish:(finalscore:Int)->Unit,
+    onFinish:(finalScore:Int)->Unit,
     onBackClick: ()->Unit
 ) {
     LearnASLTheme {
