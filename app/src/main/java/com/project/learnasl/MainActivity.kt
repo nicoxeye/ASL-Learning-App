@@ -1,7 +1,6 @@
 package com.project.learnasl
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -22,6 +21,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.project.learnasl.utils.startFlashcardsActivity
+import com.project.learnasl.utils.startMatchActivity
+import com.project.learnasl.utils.startQuizActivity
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -115,16 +117,4 @@ fun ColumnOfButtons(context: Context) {
 
     }
 
-}
-
-
-fun startQuizActivity(context: Context) {
-    context.startActivity(Intent(context, QuizActivity::class.java))
-}
-
-fun startFlashcardsActivity(context: Context) {
-    context.startActivity(Intent(context, FlashcardsActivity::class.java))
-}
-fun startMatchActivity(context: Context) {
-    context.startActivity(Intent(context, MatchActivity::class.java))
 }
