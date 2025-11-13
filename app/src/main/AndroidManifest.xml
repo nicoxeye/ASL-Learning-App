@@ -18,10 +18,18 @@
             android:theme="@style/Theme.LearnASL">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ScoreActivity.ScoreActivity"
+            android:exported="false" />
+        <activity
+            android:name=".QuestionActivity.QuestionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".QuestionActivity.MainActivity"
+            android:exported="false" />
         <activity
             android:name=".QuizActivity"
             android:exported="false"
