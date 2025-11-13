@@ -41,7 +41,7 @@ class MatchActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LearnASLTheme(
-                // darkTheme = true
+                //darkTheme = true
             ) {
                 Surface(
                     // fills the background of the app
@@ -69,11 +69,11 @@ data class AslPair(
 )
 
 val allAslPairs = listOf(
-    AslPair(Drawing(R.drawable.letter_a, "A"), "A"),
-    AslPair(Drawing(R.drawable.letter_b, "B"), "B"),
-    AslPair(Drawing(R.drawable.letter_c, "C"), "C"),
-    AslPair(Drawing(R.drawable.letter_d, "D"), "D"),
-    AslPair(Drawing(R.drawable.letter_e, "E"), "E")
+    AslPair(Drawing(R.drawable.asl_a, "A"), "A"),
+    AslPair(Drawing(R.drawable.asl_b, "B"), "B"),
+    AslPair(Drawing(R.drawable.asl_c, "C"), "C"),
+    AslPair(Drawing(R.drawable.asl_d, "D"), "D"),
+    AslPair(Drawing(R.drawable.asl_e, "E"), "E")
 )
 
 //TODO: do functions to make this code readable...
@@ -87,7 +87,7 @@ fun MatchGame(pairs: List<AslPair>) {
 
     // timer control
     var isRunning by remember { mutableStateOf(true) }
-    var finalTime by remember { mutableStateOf(0) }
+    var finalTime by remember { mutableIntStateOf(0) }
 
     val shuffledImages = remember { pairs.shuffled() }
     val shuffledLabels = remember { pairs.map { it.label }.shuffled() }
