@@ -3,4 +3,5 @@
     <string name="title_activity_match">MatchActivity</string>
     <string name="title_activity_flashcards">FlashcardsActivity</string>
     <string name="title_activity_quiz">QuizActivity</string>
+    <string name="title_activity_welcomer">Welcomer</string>
 </resources>
