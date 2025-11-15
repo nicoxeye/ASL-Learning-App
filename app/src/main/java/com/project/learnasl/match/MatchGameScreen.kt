@@ -4,10 +4,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -15,14 +19,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.project.learnasl.R
 import com.project.learnasl.match.data.AslPair
 import kotlin.collections.plus
 
-//TODO: do functions to make this code readable...
+
 @Composable
-fun MatchGame(pairs: List<AslPair>) {
+fun MatchGame(pairs: List<AslPair>, onBackClick: () -> Unit, onNewGame: () -> Unit) {
     // remembers the selected (clicked) image and label by the user
     var selectedImage by remember { mutableStateOf<AslPair?>(null) }
     var selectedLabel by remember { mutableStateOf<String?>(null) }
@@ -36,6 +42,9 @@ fun MatchGame(pairs: List<AslPair>) {
     val shuffledImages = remember { pairs.shuffled() }
     val shuffledLabels = remember { pairs.map { it.label }.shuffled() }
 
+    // to control the dialog showing
+    var showDialog by remember { mutableStateOf(false) }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -47,14 +56,47 @@ fun MatchGame(pairs: List<AslPair>) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            TitleText()
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(onClick = { onBackClick() }) {
+                    Icon(
+                        painter = painterResource(R.drawable.go_back),
+                        contentDescription = "Go back button",
+                        tint = MaterialTheme.colorScheme.onBackground,
+                    )
+                }
+
+                Text(
+                    text = "MATCH",
+                    style = MaterialTheme.typography.headlineLarge,
+                    fontSize = 64.sp,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(top = 64.dp)
+                )
+            }
+
+            Text(
+                text = "match the sign to its letter",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(top = 4.dp),
+                fontSize = 24.sp,
+                color = MaterialTheme.colorScheme.onBackground
+            )
+
+
             GameTimer(
                 isRunning = isRunning,
                 modifier = Modifier.padding(top = 16.dp)
             ) {
-                    seconds ->
+                seconds ->
                 finalTime = seconds
             }
+
         }
 
         Row(
@@ -134,47 +176,28 @@ fun MatchGame(pairs: List<AslPair>) {
 
         }
 
-        // temporary;
-        // TODO: to show the puzzle is solved, do a custom pop up and option to restart or go back
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+
+        // custom pop up when game is won
+
+        // updates happen outside composition in a launched effect so updating these variables won't cause bugs now
+        LaunchedEffect(solved.size) {
             if (solved.size == pairs.size) {
                 // stopping the timer
                 isRunning = false
-
-                Text(
-                    text = "Solved in ${finalTime}s!",
-                    Modifier.padding(8.dp),
-                    color = MaterialTheme.colorScheme.secondary,
-                    style = MaterialTheme.typography.labelLarge
-                )
+                showDialog = true
             }
+        }
+
+        if (showDialog) {
+            MatchWinDialog(
+                onDismiss = { onBackClick() },
+                onConfirm = { onNewGame() },
+                elapsedTime = finalTime
+            )
         }
 
     }
 }
 
 
-// @Preview(showBackground = true)
-@Composable
-fun TitleText() {
 
-    Text(
-        text = "MATCH",
-        style = MaterialTheme.typography.headlineLarge,
-        fontSize = 64.sp,
-        color = MaterialTheme.colorScheme.primary,
-        modifier = Modifier.padding(top = 64.dp)
-    )
-
-    Text(
-        text = "match the sign to its letter",
-        style = MaterialTheme.typography.titleMedium,
-        modifier = Modifier.padding(top = 4.dp),
-        fontSize = 24.sp,
-        color = MaterialTheme.colorScheme.onBackground
-    )
-
-}

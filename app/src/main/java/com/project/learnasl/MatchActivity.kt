@@ -1,5 +1,6 @@
 package com.project.learnasl
 
+import android.content.Intent
 import com.project.learnasl.match.MatchGame
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -27,7 +28,21 @@ class MatchActivity : ComponentActivity() {
                 ) {
                     // hardcoded number of pairs for now to nicely fit the screen, will probably change it with difficulties?
                     val gameAslPairs = allAslPairs.shuffled().take(4)
-                    MatchGame(gameAslPairs)
+                    MatchGame(gameAslPairs,
+                        // TODO: update this with the helper functions in utils
+                        // go back to main screen
+                        onBackClick =  {
+                            finish()
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
+                                       },
+                        //reset
+                        onNewGame = {
+                            finish()
+                            val intent = Intent(this, MatchActivity::class.java)
+                            startActivity(intent)
+                                    }
+                    )
                 }
             }
         }
