@@ -1,5 +1,4 @@
 app/* linguist-documentation=false
-app/** linguist-documentation=false
 
 # Java sources
 *.java          text diff=java
