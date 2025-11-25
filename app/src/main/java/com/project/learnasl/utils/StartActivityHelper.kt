@@ -5,6 +5,7 @@ import android.content.Intent
 import com.project.learnasl.FlashcardsActivity
 import com.project.learnasl.MatchActivity
 import com.project.learnasl.QuizActivity
+import com.project.learnasl.UserCreationActivity
 
 fun startQuizActivity(context: Context) {
     context.startActivity(Intent(context, QuizActivity::class.java))
@@ -16,4 +17,8 @@ fun startFlashcardsActivity(context: Context) {
 
 fun startMatchActivity(context: Context) {
     context.startActivity(Intent(context, MatchActivity::class.java))
+}
+
+fun startUserCreationActivity(context: Context) {
+    context.startActivity(Intent(context, UserCreationActivity::class.java))
 }

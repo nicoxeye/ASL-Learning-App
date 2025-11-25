@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.project.learnasl.utils.startUserCreationActivity
 import kotlinx.coroutines.delay
 
 class Welcomer : ComponentActivity() {
@@ -38,9 +39,14 @@ class Welcomer : ComponentActivity() {
             ){
                 GreetingScreen {
                     // the onTimeout() function
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
+
+                    //val intent = Intent(this, MainActivity::class.java)
+                    //startActivity(intent)
+
+                    // temp
+                    startUserCreationActivity(this);
                     finish()
+
                 }
             }
         }
