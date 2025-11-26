@@ -13,7 +13,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.project.learnasl.database.User
-import com.project.learnasl.database.UserEvent
 import com.project.learnasl.database.UserViewModel
 
 
@@ -30,12 +29,9 @@ fun CreateUser(viewModel: UserViewModel) {
         Name(nameInput)
 
         Button(onClick = {
-            val user = User(name = nameInput.value)
-            viewModel.onEvent(UserEvent.SaveUser(user))
+            val name = nameInput.value.trim()
 
-            //TODO()
-            // if a user already created / exists with the same name then skip this???
-            // or make it somehow only show up once in the app idkkaksokosdaklsdwidosakldlwd
+            viewModel.saveUser(User(name = name))
         }) {
             Text("Create an account")
         }

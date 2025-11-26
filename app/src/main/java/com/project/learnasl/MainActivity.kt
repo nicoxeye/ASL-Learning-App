@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,13 +20,22 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.project.learnasl.database.UserViewModel
+import com.project.learnasl.utils.UserViewModelHelper
 import com.project.learnasl.utils.startFlashcardsActivity
 import com.project.learnasl.utils.startMatchActivity
 import com.project.learnasl.utils.startQuizActivity
+import kotlin.getValue
 
 class MainActivity : ComponentActivity() {
+
+    private val viewModel by viewModels<UserViewModel> {
+        UserViewModelHelper.getFactory(application)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -38,12 +48,34 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val context = LocalContext.current
-                    ColumnOfButtons(context)
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        //testing!!
+                        UserText(viewModel)
+
+                        val context = LocalContext.current
+                        ColumnOfButtons(context)
+                    }
+
                 }
             }
         }
     }
+}
+
+@Composable
+fun UserText(viewModel: UserViewModel) {
+    //gets the one (1) user existing in the database and shows theri name and exp for testing
+    val user = viewModel.currentUser.value
+
+    if (user != null) {
+        Text("Welcome, ${user.name}")
+        Text("XP: ${user.experience}")
+    }
+
 }
 
 // @Preview(showBackground = true) //with func parameters doesn't work

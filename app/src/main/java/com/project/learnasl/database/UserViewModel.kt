@@ -1,27 +1,38 @@
 package com.project.learnasl.database
 
+import android.app.Application
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
 // "ViewModel is a class that is responsible for preparing and managing the data for an activity"
 class UserViewModel(
-    private val dao: UserDao
+    application: Application
 ): ViewModel() {
 
-    var name: String = ""
+    private val repository: UserRepository
+    val currentUser = mutableStateOf<User?>(null)
 
-    // managing the events connected with the database
-    fun onEvent(event: UserEvent) {
-        when (event) {
+    init {
+        val db = AppDatabase.getDatabase(application)
+        repository = UserRepository(db.dao)
 
-            // coroutines so the app won't crash
-            is UserEvent.SaveUser -> {
-                viewModelScope.launch {
-                    dao.insertDao(event.user)
-                }
-            }
+        viewModelScope.launch {
+            // coroutine to get the user
+            currentUser.value = repository.getUser()
+        }
 
+    }
+
+    fun saveUser(user: User) {
+        viewModelScope.launch {
+            repository.insertUser(user)
         }
     }
+
+    suspend fun hasUser(): Boolean {
+        return repository.getUserCount() > 0
+    }
+
 }

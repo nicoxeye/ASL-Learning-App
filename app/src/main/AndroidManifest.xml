@@ -12,11 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LearnASL">
         <activity
-            android:name=".userprofile.CreateUser"
-            android:exported="false"
-            android:label="@string/title_activity_create_user"
-            android:theme="@style/Theme.LearnASL" />
-        <activity
             android:name=".UserCreationActivity"
             android:exported="false"
             android:label="@string/title_activity_user_creation"
