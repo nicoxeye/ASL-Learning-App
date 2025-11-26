@@ -45,7 +45,7 @@ class UserCreationActivity : ComponentActivity() {
             LearnASLTheme {
 
                 if (showCreateUser.value) {
-                    CreateUser(viewModel)
+                    CreateUser(viewModel, context)
                 }
 
             }
