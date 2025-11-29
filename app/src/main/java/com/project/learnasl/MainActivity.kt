@@ -55,7 +55,6 @@ class MainActivity : ComponentActivity() {
                         verticalArrangement = Arrangement.spacedBy(26.dp, Alignment.CenterVertically),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        //testing!!
                         UserText(viewModel)
 
                         val context = LocalContext.current

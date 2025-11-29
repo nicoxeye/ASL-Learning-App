@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -20,32 +21,57 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.project.learnasl.ui.theme.LearnASLTheme
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.project.learnasl.database.UserViewModel
+import com.project.learnasl.userprofile.CreateUser
+import com.project.learnasl.utils.UserViewModelHelper
+import com.project.learnasl.utils.startMainActivity
 import com.project.learnasl.utils.startUserCreationActivity
 import kotlinx.coroutines.delay
+import kotlin.getValue
 
 class Welcomer : ComponentActivity() {
+
+    private val viewModel by viewModels<UserViewModel> {
+        UserViewModelHelper.getFactory(application)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+
+            val context = LocalContext.current
+            // boolean
+            val showCreateUser = remember { mutableStateOf(false) }
+
+            LaunchedEffect(Unit) {
+                showCreateUser.value = !viewModel.hasUser()
+            }
+
+
             LearnASLTheme(
                 //darkTheme = true
             ){
+
+
                 GreetingScreen {
-                    // the onTimeout() function
-
-                    //val intent = Intent(this, MainActivity::class.java)
-                    //startActivity(intent)
-
-                    // temp
-                    startUserCreationActivity(this);
-                    finish()
+                    // will happen after the timeout
+                    if (showCreateUser.value) {
+                        startUserCreationActivity(this)
+                        finish()
+                    } else {
+                        startMainActivity(this);
+                        finish()
+                    }
 
                 }
             }
