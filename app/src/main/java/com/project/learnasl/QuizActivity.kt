@@ -44,7 +44,7 @@ class QuizActivity : ComponentActivity() {
                 answer_4 = "Letter G",
                 correct_answer = "a",
                 score = 1,
-                img_path = "letter_b",
+                img_path = "asl_b",
                 clicked_answer = null
             ),
             QuestionModel(
@@ -56,7 +56,7 @@ class QuizActivity : ComponentActivity() {
                 answer_4 = "Letter G",
                 correct_answer = "a",
                 score = 1,
-                img_path = "letter_c",
+                img_path = "asl_c",
                 clicked_answer = null
             ),
             QuestionModel(
@@ -68,7 +68,7 @@ class QuizActivity : ComponentActivity() {
                 answer_4 = "Letter A",
                 correct_answer = "d",
                 score = 1,
-                img_path = "letter_a",
+                img_path = "asl_a",
                 clicked_answer = null
             ),
             QuestionModel(
@@ -80,7 +80,7 @@ class QuizActivity : ComponentActivity() {
                 answer_4 = "Letter A",
                 correct_answer = "c",
                 score = 1,
-                img_path = "letter_d",
+                img_path = "asl_d",
                 clicked_answer = null
             ),
             QuestionModel(
@@ -92,7 +92,7 @@ class QuizActivity : ComponentActivity() {
                 answer_4 = "Letter E",
                 correct_answer = "d",
                 score = 1,
-                img_path = "letter_e",
+                img_path = "asl_e",
                 clicked_answer = null
             )
         )

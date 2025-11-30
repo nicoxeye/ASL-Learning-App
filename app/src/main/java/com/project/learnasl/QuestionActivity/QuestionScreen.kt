@@ -1,8 +1,10 @@
 package com.project.learnasl.QuestionActivity
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -184,21 +187,18 @@ fun QuestionScreen(
             }
             // sign image
             item {
-//            Column(
-//                modifier = Modifier.fillMaxHeight(),
-//                verticalArrangement = Arrangement.Center
-//            )
-//            {  }
                 Image(
                     painterResource(imageResID),
                     contentDescription = "Sign for a letter",
+                    contentScale = ContentScale.Fit,
+
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp)
-                        //.width(200.dp)
                         .padding(horizontal = 24.dp, vertical = 8.dp)
-                        .clip(RoundedCornerShape(12.dp)),
-                    contentScale = ContentScale.Crop
+                        .width(350.dp)
+                        .height(200.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(Color.White)
+                        .padding(horizontal = 24.dp, vertical = 8.dp)
                 )
             }
             itemsIndexed(
@@ -257,7 +257,7 @@ fun QuestionScreenPreview(){
             answer_4 = "Letter G",
             correct_answer = "Letter B",
             score = 10,
-            img_path = "letter_a",
+            img_path = "asl_a",
             clicked_answer = null
         ))
     QuestionScreen(questions = questions, onFinish = {}, onBackClick = {})
