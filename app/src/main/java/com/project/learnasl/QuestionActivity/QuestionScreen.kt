@@ -82,10 +82,8 @@ fun QuestionScreen(
             item {
                 // header
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(24.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                    modifier = Modifier.padding(top = 70.dp, start = 24.dp),
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {    // go back button
                     IconButton(onClick = onBackClick ) {
                         Icon(
