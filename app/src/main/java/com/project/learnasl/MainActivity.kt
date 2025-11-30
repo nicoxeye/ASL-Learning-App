@@ -49,11 +49,12 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Column(
+                        // makes it so the column will be on the center of the screen
                         modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
+                        // 26 dp gap between children (buttons)
+                        verticalArrangement = Arrangement.spacedBy(26.dp, Alignment.CenterVertically),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        //testing!!
                         UserText(viewModel)
 
                         val context = LocalContext.current
@@ -72,8 +73,12 @@ fun UserText(viewModel: UserViewModel) {
     val user = viewModel.currentUser.value
 
     if (user != null) {
-        Text("Welcome, ${user.name}")
-        Text("XP: ${user.experience}")
+        Text("Welcome, ${user.name}",
+            color = MaterialTheme.colorScheme.onBackground
+        )
+        Text("XP: ${user.experience}",
+            color = MaterialTheme.colorScheme.onBackground
+        )
     }
 
 }
@@ -82,19 +87,9 @@ fun UserText(viewModel: UserViewModel) {
 @Composable
 // TODO: make a custom function with buttons to make the code more modular (reusable) :]
 fun ColumnOfButtons(context: Context) {
-
-    Column(
-        // makes it so the column will be on the center of the screen
-        modifier = Modifier.fillMaxSize(),
-        // 26 dp gap between children (buttons)
-        verticalArrangement = Arrangement.spacedBy(26.dp, Alignment.CenterVertically),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-        Button(
-            onClick = {
-                startQuizActivity(context)
-            },
+    Button(
+        onClick = {
+            startQuizActivity(context) },
             shape = RoundedCornerShape(20.dp),
             enabled = true,
             colors = ButtonDefaults.buttonColors(
@@ -110,10 +105,10 @@ fun ColumnOfButtons(context: Context) {
         }
 
 
-        Button(
-            onClick = {
-                startFlashcardsActivity(context)
-            },
+    Button(
+        onClick = {
+            startFlashcardsActivity(context)
+                  },
             shape = RoundedCornerShape(20.dp),
             enabled = true,
             colors = ButtonDefaults.buttonColors(
@@ -121,18 +116,18 @@ fun ColumnOfButtons(context: Context) {
                 contentColor = MaterialTheme.colorScheme.onPrimary
             )
         ) {
-            Text(
-                text = "Flashcards",
-                Modifier.padding(8.dp),
-                style = MaterialTheme.typography.labelLarge
+        Text(
+            text = "Flashcards",
+            Modifier.padding(8.dp),
+            style = MaterialTheme.typography.labelLarge
             )
         }
 
 
-        Button(
-            onClick = {
-                startMatchActivity(context);
-            },
+    Button(
+        onClick = {
+            startMatchActivity(context);
+                  },
             shape = RoundedCornerShape(20.dp),
             enabled = true,
             colors = ButtonDefaults.buttonColors(
@@ -140,13 +135,13 @@ fun ColumnOfButtons(context: Context) {
                 contentColor = MaterialTheme.colorScheme.onPrimary
             )
         ) {
-            Text(
-                text = "Match",
-                Modifier.padding(8.dp),
-                style = MaterialTheme.typography.labelLarge
+
+        Text(
+            text = "Match",
+            Modifier.padding(8.dp),
+            style = MaterialTheme.typography.labelLarge
             )
         }
-
-    }
-
 }
+
+
