@@ -57,7 +57,7 @@ fun ScoreScreen(score: Int, context: Context)
                     fontSize = 20.sp,
                 )
                 Text(
-                    text= "$score/5",
+                    text= "$score/10",
                     color = MaterialTheme.colorScheme.secondary,
                     style = MaterialTheme.typography.labelLarge,
                     fontSize = 40.sp,

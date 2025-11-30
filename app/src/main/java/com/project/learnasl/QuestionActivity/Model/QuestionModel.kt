@@ -8,14 +8,14 @@ import kotlinx.parcelize.Parcelize
 // possible answers, image to display and user input
 @Parcelize
 data class QuestionModel(
-    val id:Int,
-    val question:String?,
-    val answer_1:String?,
-    val answer_2:String?,
-    val answer_3:String?,
-    val answer_4:String?,
+    val id: Int,
+    val question: String?,
+    val answer_1: String?,
+    val answer_2: String?,
+    val answer_3: String?,
+    val answer_4: String?,
     val correct_answer: String?,
-    val score:Int,
-    val img_path: String?,
+    val score: Int,
+    val img_path: Int,
     val clicked_answer: String?
 ): Parcelable
