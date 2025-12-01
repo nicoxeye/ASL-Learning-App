@@ -2,23 +2,20 @@ package com.project.learnasl.QuestionActivity
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.project.learnasl.MainActivity
 import com.project.learnasl.QuestionActivity.Model.QuestionModel
-import com.project.learnasl.R
 import com.project.learnasl.ScoreActivity.ScoreActivity
 import com.project.learnasl.ui.theme.LearnASLTheme
 
 // activity that uses UI and logic from QuestionScreen, if you want to use
-// quiz this is the class you should be refering to
+// quiz this is the class you should be referring to
 class QuestionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.statusBarColor= ContextCompat.getColor(this, R.color.purple_500)
-        window.decorView.systemUiVisibility= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        enableEdgeToEdge()
 
         val receivedList=
             intent.getParcelableArrayListExtra<QuestionModel>("list") ?: arrayListOf()

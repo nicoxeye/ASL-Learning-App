@@ -23,6 +23,11 @@ fun startMatchActivity(context: Context) {
     context.startActivity(Intent(context, MatchActivity::class.java))
 }
 
+// skeleton function for testing - for now only redirects to main
+fun startCameraActivity(context: Context) {
+    context.startActivity(Intent(context, MainActivity::class.java))
+}
+
 fun startUserCreationActivity(context: Context) {
     context.startActivity(Intent(context, UserCreationActivity::class.java))
 }

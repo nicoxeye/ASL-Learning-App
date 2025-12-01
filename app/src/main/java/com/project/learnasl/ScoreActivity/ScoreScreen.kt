@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.sp
 import com.project.learnasl.R
 import androidx.compose.ui.platform.LocalContext
 import com.project.learnasl.MainActivity
-import com.project.learnasl.QuestionActivity.QuestionActivity
 import com.project.learnasl.QuizActivity
 import com.project.learnasl.ui.theme.LearnASLTheme
 
@@ -58,7 +57,7 @@ fun ScoreScreen(score: Int, context: Context)
                     fontSize = 20.sp,
                 )
                 Text(
-                    text= "$score/5",
+                    text= "$score/10",
                     color = MaterialTheme.colorScheme.secondary,
                     style = MaterialTheme.typography.labelLarge,
                     fontSize = 40.sp,

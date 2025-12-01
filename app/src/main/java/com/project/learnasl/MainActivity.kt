@@ -1,33 +1,33 @@
 package com.project.learnasl
-
-import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.Modifier
 import com.project.learnasl.ui.theme.LearnASLTheme
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.project.learnasl.Dashboard.components.Banner
+import com.project.learnasl.Dashboard.components.CardGrid
+import com.project.learnasl.Dashboard.components.Header
+import com.project.learnasl.Dashboard.components.LearningModesButtons
+import com.project.learnasl.Dashboard.components.UserSection
 import com.project.learnasl.database.UserViewModel
+import com.project.learnasl.match.data.allAslPairs
 import com.project.learnasl.utils.UserViewModelHelper
 import com.project.learnasl.utils.startFlashcardsActivity
 import com.project.learnasl.utils.startMatchActivity
 import com.project.learnasl.utils.startQuizActivity
+import com.project.learnasl.utils.startCameraActivity
 import kotlin.getValue
 
 class MainActivity : ComponentActivity() {
@@ -40,108 +40,54 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            LearnASLTheme(
-                // darkTheme = true // uncomment to see the app in darkTheme
-            ) {
-                Surface(
-                    // fills the background of the app
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+            //UserSection(viewModel = viewModel)
+            LearnASLTheme {
+                val context = LocalContext.current
+                val user = viewModel.currentUser.value
+
+                // default if something goes wrong
+                var username = "Unknown";
+                var experience = 0;
+
+                if (user != null) {
+                    username = user.name
+                    experience = user.experience
+                }
+
+                // get one random card refreshing each time MainActivity is opened
+                val ASLpair = allAslPairs.shuffled().first()
+                val label =  ASLpair.label
+                val image = ASLpair.drawing.imageRes
+
+                //val scroll_state = rememberScrollState()
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colorScheme.background)
                 ) {
-                    Column(
-                        // makes it so the column will be on the center of the screen
-                        modifier = Modifier.fillMaxSize(),
-                        // 26 dp gap between children (buttons)
-                        verticalArrangement = Arrangement.spacedBy(26.dp, Alignment.CenterVertically),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        UserText(viewModel)
-
-                        val context = LocalContext.current
-                        ColumnOfButtons(context)
+                    item {
+                        Row(
+                            modifier = Modifier.padding(top = 70.dp), // <- reducing size
+                            // of empty space makes space for any type of menu up here :D
+                        ) {}
+                        UserSection(username, experience)
+                        Spacer(modifier = Modifier.height(16.dp))
+                        LearningModesButtons()
+                        Spacer(modifier = Modifier.height(32.dp))
+                        Header()
+                        CardGrid(
+                            { startQuizActivity(context) },
+                            { startFlashcardsActivity(context) },
+                            { startMatchActivity(context) },
+                            { startCameraActivity(context = context) },
+                        )
+                        Spacer(modifier = Modifier.height(48.dp))
+                        Banner(label, image)
                     }
-
                 }
             }
+
         }
     }
 }
-
-@Composable
-fun UserText(viewModel: UserViewModel) {
-    //gets the one (1) user existing in the database and shows theri name and exp for testing
-    val user = viewModel.currentUser.value
-
-    if (user != null) {
-        Text("Welcome, ${user.name}",
-            color = MaterialTheme.colorScheme.onBackground
-        )
-        Text("XP: ${user.experience}",
-            color = MaterialTheme.colorScheme.onBackground
-        )
-    }
-
-}
-
-// @Preview(showBackground = true) //with func parameters doesn't work
-@Composable
-// TODO: make a custom function with buttons to make the code more modular (reusable) :]
-fun ColumnOfButtons(context: Context) {
-    Button(
-        onClick = {
-            startQuizActivity(context) },
-            shape = RoundedCornerShape(20.dp),
-            enabled = true,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary, // background
-                contentColor = MaterialTheme.colorScheme.onPrimary // text
-            ),
-        ) {
-            Text(
-                text = "Quiz",
-                Modifier.padding(8.dp),
-                style = MaterialTheme.typography.labelLarge
-            )
-        }
-
-
-    Button(
-        onClick = {
-            startFlashcardsActivity(context)
-                  },
-            shape = RoundedCornerShape(20.dp),
-            enabled = true,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary
-            )
-        ) {
-        Text(
-            text = "Flashcards",
-            Modifier.padding(8.dp),
-            style = MaterialTheme.typography.labelLarge
-            )
-        }
-
-
-    Button(
-        onClick = {
-            startMatchActivity(context);
-                  },
-            shape = RoundedCornerShape(20.dp),
-            enabled = true,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary
-            )
-        ) {
-
-        Text(
-            text = "Match",
-            Modifier.padding(8.dp),
-            style = MaterialTheme.typography.labelLarge
-            )
-        }
-}
-
 
