@@ -59,7 +59,9 @@ fun FlashcardScreen(
     val answeredCount = flashcardState.alreadyKnow.size + flashcardState.stillLearning.size
     var showFinishDialog by remember { mutableStateOf(false) }
 
-    LearnASLTheme {
+    LearnASLTheme (
+        //darkTheme = true
+    ) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()

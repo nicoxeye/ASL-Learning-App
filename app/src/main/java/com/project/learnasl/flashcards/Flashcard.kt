@@ -177,6 +177,7 @@ fun FlashcardAnimation(flashcardsState: FlashcardsState,
         return
     }
 
+    // OUTER BOX: handles position/rotation/swiping animation
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -250,34 +251,42 @@ fun FlashcardAnimation(flashcardsState: FlashcardsState,
             },
         contentAlignment = Alignment.Center
     ) {
-        // BLURRED FLASHCARD + FLIP LOGIC
+        // INNER BOX: actual card, with clip + blur + flip logic
         Box(
             modifier = Modifier
-                .matchParentSize()
-                .blur(blurRadius)
+                .fillMaxSize()
+                .clip(RoundedCornerShape(20.dp))   // clipping przeniesione TUTAJ
         ) {
-            // flip logic
-            if (rotation <= 90f) {
-                // show front of the flashcard (image)
-                FlashcardFront(
-                    image = currentFlashcard.imageRes,
-                    onClick = { face = face.flipped() }
-                )
-            } else {
-                // show back of the flashcard (text)}
-                Box(
-                    // additional 180f rotation to make sure the text itself ISN'T flipped
-                    modifier = Modifier
-                        .graphicsLayer { rotationY = 180f }
-                ) {
-                    FlashcardBack(
-                        text = currentFlashcard.text,
+            // BLURRED FLASHCARD + FLIP LOGIC
+            Box(
+                modifier = Modifier
+                    .matchParentSize()
+                    .blur(blurRadius)
+                    .clip(RoundedCornerShape(20.dp))
+            ) {
+                // flip logic
+                if (rotation <= 90f) {
+                    // show front of the flashcard (image)
+                    FlashcardFront(
+                        image = currentFlashcard.imageRes,
                         onClick = { face = face.flipped() }
                     )
+                } else {
+                    // show back of the flashcard (text)}
+                    Box(
+                        // additional 180f rotation to make sure the text itself ISN'T flipped
+                        modifier = Modifier
+                            .graphicsLayer { rotationY = 180f }
+                    ) {
+                        FlashcardBack(
+                            text = currentFlashcard.text,
+                            onClick = { face = face.flipped() }
+                        )
+                    }
                 }
             }
+            // OVERLAY WITH TEXT: "KNOW" (swipe right)/"STILL LEARNING" (swipe left)
+            SwipeOverlay(effectiveOffsetX, overlayAlpha, isFront)
         }
-        // OVERLAY WITH TEXT: "KNOW" (swipe right)/"STILL LEARNING" (swipe left)
-        SwipeOverlay(effectiveOffsetX, overlayAlpha, isFront)
     }
 }
