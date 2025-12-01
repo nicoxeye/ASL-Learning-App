@@ -52,7 +52,7 @@ class QuizActivity : ComponentActivity() {
                 answer_4 = options[3],
                 correct_answer = correct,
                 score = 1,
-                img_path = item.drawing.imageRes, // lub item.drawing.imgRes
+                img_path = item.drawing.imageRes,
                 clicked_answer = null
             )
         }
