@@ -7,6 +7,7 @@ import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,6 +27,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
@@ -50,6 +53,9 @@ fun FlashcardFront(image: Int, onClick: () -> Unit) {
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
+            .clip(RoundedCornerShape(20.dp))
+            // added border to make sure the stack is more visible (devilish smile)
+            .border(color = MaterialTheme.colorScheme.primary, width = 3.dp, shape = RoundedCornerShape(20.dp))
             .clickable { onClick() }
     ) {
         Image(
@@ -70,6 +76,8 @@ fun FlashcardBack(text: String, onClick: () -> Unit) {
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
+            .clip(RoundedCornerShape(20.dp))
+            .border(color = MaterialTheme.colorScheme.primary, width = 3.dp, shape = RoundedCornerShape(20.dp))
             .clickable { onClick() }
     ) {
         Text(
@@ -182,12 +190,14 @@ fun FlashcardAnimation(flashcardsState: FlashcardsState,
             .pointerInput(flashcardsState.currentFlashcard) {
                 detectDragGestures(
                     onDrag = { change, dragAmount ->
+                        flashcardsState.isSwiping = true
                         change.consume()
                         scope.launch {
                             offsetX.snapTo(offsetX.value + dragAmount.x)
                         }
                     },
                     onDragEnd = {
+                        flashcardsState.isSwiping = false
                         scope.launch {
                             // after gesture is finished -> take current flashcard
                             val card = flashcardsState.currentFlashcard
@@ -198,28 +208,36 @@ fun FlashcardAnimation(flashcardsState: FlashcardsState,
 
                             // swipe right + add to "already_know" list
                             if (offsetX.value > swipeThreshold) {
+                                // swipe right animation -> before handling logic and moving index
+                                offsetX.animateTo(1000f, tween(300))
+
                                 flashcardsState.markAsAlreadyKnown(currentFlashcard)
+                                // check if it's the last flashcard
                                 if (flashcardsState.currentIndex == flashcardsState.flashcards.lastIndex) {
                                     onFinished()
                                 } else {
                                     flashcardsState.moveToNext()
                                 }
+
                                 // FlashcardFront is shown on default
                                 face = CardFace.Front
-                                offsetX.animateTo(1000f, tween(300))
                                 offsetX.snapTo(0f)
                             }
                             // swipe left + add to "still learning" list
                             else if (offsetX.value < -swipeThreshold) {
+                                // swipe left animation -> before handling logic and moving index
+                                offsetX.animateTo(-1000f, tween(300))
+
                                 flashcardsState.markAsStillLearning(currentFlashcard)
+                                // check if it's the last flashcard
                                 if (flashcardsState.currentIndex == flashcardsState.flashcards.lastIndex) {
                                     onFinished()
                                 } else {
                                     flashcardsState.moveToNext()
                                 }
+
                                 // FlashcardFront is shown on default
                                 face = CardFace.Front
-                                offsetX.animateTo(-1000f, tween(300))
                                 offsetX.snapTo(0f)
                             }
                             // no successful swipe

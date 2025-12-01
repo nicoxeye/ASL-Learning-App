@@ -4,13 +4,15 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 
 data class FlashcardsState (
     val flashcards: List<Flashcard>,
     val alreadyKnow: SnapshotStateList<Flashcard> = mutableStateListOf(),
-    val stillLearning: SnapshotStateList<Flashcard> = mutableStateListOf()
+    val stillLearning: SnapshotStateList<Flashcard> = mutableStateListOf(),
 ) {
+    var isSwiping by mutableStateOf(false)
     var currentIndex by mutableIntStateOf(0)
         private set
 

@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.project.learnasl.flashcards.model.Flashcard
@@ -121,19 +122,16 @@ fun FlashcardScreen(
 
             // flashcards
             item {
-                Row(
+                Box(
                     modifier = Modifier
-                        .padding(24.dp),
-                    horizontalArrangement = Arrangement.Center
+                        .fillMaxWidth()
+                        .padding(top = 24.dp, start = 24.dp, end = 24.dp),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Box (
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(20.dp))
-                    ) {
-                        FlashcardAnimation(
-                            flashcardsState = flashcardState,
-                            onFinished = { showFinishDialog = true})
-                    }
+                    FlashcardStack(
+                        flashcardState,
+                        onFinished = { showFinishDialog = true }
+                    )
                 }
             }
         }
@@ -147,6 +145,7 @@ fun FlashcardScreen(
         }
     }
 }
+
 
 
 @Preview(showBackground = true)
