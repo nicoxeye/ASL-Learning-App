@@ -214,7 +214,7 @@ fun FlashcardAnimation(flashcardsState: FlashcardsState,
 
                                 flashcardsState.markAsAlreadyKnown(currentFlashcard)
                                 // check if it's the last flashcard
-                                if (flashcardsState.currentIndex == flashcardsState.flashcards.lastIndex) {
+                                if (flashcardsState.currentIndex == flashcardsState.currentFlashcards.lastIndex) {
                                     onFinished()
                                 } else {
                                     flashcardsState.moveToNext()
@@ -231,7 +231,7 @@ fun FlashcardAnimation(flashcardsState: FlashcardsState,
 
                                 flashcardsState.markAsStillLearning(currentFlashcard)
                                 // check if it's the last flashcard
-                                if (flashcardsState.currentIndex == flashcardsState.flashcards.lastIndex) {
+                                if (flashcardsState.currentIndex == flashcardsState.currentFlashcards.lastIndex) {
                                     onFinished()
                                 } else {
                                     flashcardsState.moveToNext()

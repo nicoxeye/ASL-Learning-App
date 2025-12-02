@@ -18,7 +18,8 @@ fun FlashcardStack(
 ) {
 
     val currentIndex = flashcardsState.currentIndex
-    val allCards = flashcardsState.flashcards
+    // current flashcards can be either a default set or a "still learning" set
+    val allCards = flashcardsState.currentFlashcards
     val total = allCards.size
     val isSwiping = flashcardsState.isSwiping
 

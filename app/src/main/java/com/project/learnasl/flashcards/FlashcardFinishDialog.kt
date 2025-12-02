@@ -25,9 +25,13 @@ import androidx.compose.ui.window.Dialog
 @Composable
 fun FlashcardFinishDialog(
     onBackToMenu: () -> Unit,
+    onRepeatWholeSet: () -> Unit,
+    onRepeatStillLearning: () -> Unit,
     totalCards: Short,
     knownCount: Short,
-    stillLearningCount: Short
+    stillLearningCount: Short,
+    showRepeatWholeSetButton: Boolean = true,
+    showStillLearningButton: Boolean = true
 ) {
     Dialog(
         onDismissRequest = {
@@ -77,17 +81,20 @@ fun FlashcardFinishDialog(
                         textAlign = TextAlign.Center
                     )
                 }
-                Box(
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "Already know: $knownCount\n Still learning: $stillLearningCount",
-                        fontWeight = FontWeight.Normal,
-                        fontSize = 14.sp,
-                        style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.secondary,
-                        textAlign = TextAlign.Center
-                    )
+                // if NOT in still learning mode -> display stats
+                if (showStillLearningButton || showRepeatWholeSetButton) {
+                    Box(
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "Already know: $knownCount\n Still learning: $stillLearningCount",
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 14.sp,
+                            style = MaterialTheme.typography.labelLarge,
+                            color = MaterialTheme.colorScheme.secondary,
+                            textAlign = TextAlign.Center
+                        )
+                    }
                 }
                 Row(
                     modifier = Modifier.padding(top = 8.dp),
@@ -98,6 +105,24 @@ fun FlashcardFinishDialog(
                         onClick = { onBackToMenu() }
                     ) {
                         Text("Back to menu")
+                    }
+                }
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Button(
+                        onClick = { onRepeatWholeSet() }
+                    ) {
+                        Text("Repeat whole set")
+                    }
+                }
+                if (showStillLearningButton && stillLearningCount > 0) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Button(onClick = { onRepeatStillLearning() }) {
+                            Text("Learn $stillLearningCount flashcards")
+                        }
                     }
                 }
             }

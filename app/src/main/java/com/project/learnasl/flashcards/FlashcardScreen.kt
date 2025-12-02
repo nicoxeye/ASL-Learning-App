@@ -40,44 +40,56 @@ import com.project.learnasl.ui.theme.LearnASLTheme
 
 @Composable
 fun FlashcardScreen(
-    onBackClick: () -> Unit, // back to menu
+    onBackClick: () -> Unit, // back to menu,
+    initialFlashcards: List<Flashcard> ? = null
 ) {
+
+    // default flashcard set
+    val defaultFlashcardsSet = listOf(
+        Flashcard(R.drawable.asl_a, "A"),
+        Flashcard(R.drawable.asl_b, "B"),
+        Flashcard(R.drawable.asl_c, "C"),
+        Flashcard(R.drawable.asl_d, "D"),
+        Flashcard(R.drawable.asl_e, "E"),
+        Flashcard(R.drawable.asl_f, "F"),
+        Flashcard(R.drawable.asl_g, "G"),
+        Flashcard(R.drawable.asl_h, "H"),
+        Flashcard(R.drawable.asl_i, "I"),
+        Flashcard(R.drawable.asl_j, "J"),
+        Flashcard(R.drawable.asl_k, "K"),
+        Flashcard(R.drawable.asl_l, "L"),
+        Flashcard(R.drawable.asl_m, "M"),
+        Flashcard(R.drawable.asl_n, "N"),
+        Flashcard(R.drawable.asl_o, "O"),
+        Flashcard(R.drawable.asl_p, "P"),
+        Flashcard(R.drawable.asl_q, "Q"),
+        Flashcard(R.drawable.asl_r, "R"),
+        Flashcard(R.drawable.asl_s, "S"),
+        Flashcard(R.drawable.asl_t, "T"),
+        Flashcard(R.drawable.asl_u, "U"),
+        Flashcard(R.drawable.asl_v, "V"),
+        Flashcard(R.drawable.asl_w, "W"),
+        Flashcard(R.drawable.asl_x, "X"),
+        Flashcard(R.drawable.asl_y, "Y"),
+        Flashcard(R.drawable.asl_z, "Z")
+    )
 
     val flashcardState = remember {
         FlashcardsState(
-            flashcards = listOf(
-                Flashcard(R.drawable.asl_a, "A"),
-                Flashcard(R.drawable.asl_b, "B"),
-                Flashcard(R.drawable.asl_c, "C"),
-                Flashcard(R.drawable.asl_d, "D"),
-                Flashcard(R.drawable.asl_e, "E"),
-                Flashcard(R.drawable.asl_f, "F"),
-                Flashcard(R.drawable.asl_g, "G"),
-                Flashcard(R.drawable.asl_h, "H"),
-                Flashcard(R.drawable.asl_i, "I"),
-                Flashcard(R.drawable.asl_j, "J"),
-                Flashcard(R.drawable.asl_k, "K"),
-                Flashcard(R.drawable.asl_l, "L"),
-                Flashcard(R.drawable.asl_m, "M"),
-                Flashcard(R.drawable.asl_n, "N"),
-                Flashcard(R.drawable.asl_o, "O"),
-                Flashcard(R.drawable.asl_p, "P"),
-                Flashcard(R.drawable.asl_q, "Q"),
-                Flashcard(R.drawable.asl_r, "R"),
-                Flashcard(R.drawable.asl_s, "S"),
-                Flashcard(R.drawable.asl_t, "T"),
-                Flashcard(R.drawable.asl_u, "U"),
-                Flashcard(R.drawable.asl_v, "V"),
-                Flashcard(R.drawable.asl_w, "W"),
-                Flashcard(R.drawable.asl_x, "X"),
-                Flashcard(R.drawable.asl_y, "Y"),
-                Flashcard(R.drawable.asl_z, "Z"),
-            )
+            flashcards = initialFlashcards ?: defaultFlashcardsSet
         )
     }
 
-    val total = flashcardState.flashcards.size
-    val answeredCount = flashcardState.alreadyKnow.size + flashcardState.stillLearning.size
+    val total = flashcardState.currentFlashcards.size
+    // if in still learning mode
+    val answeredCount =
+        if (flashcardState.isStillLearningMode) {
+                flashcardState.currentIndex
+        }
+        else {
+            flashcardState.alreadyKnow.size + flashcardState.stillLearning.size
+        }
+
     var showFinishDialog by remember { mutableStateOf(false) }
 
     LearnASLTheme (
@@ -103,7 +115,9 @@ fun FlashcardScreen(
                     }
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "Flashcards: ASL Alphabet",
+                        text =
+                            if (flashcardState.isStillLearningMode) "Still learning Mode"
+                            else "Flashcards: ASL Alphabet",
                         fontSize = 20.sp,
                         color = MaterialTheme.colorScheme.onBackground,
                         style = MaterialTheme.typography.labelLarge
@@ -161,9 +175,24 @@ fun FlashcardScreen(
         if (showFinishDialog) {
             FlashcardFinishDialog(
                 onBackToMenu = onBackClick,
+                onRepeatWholeSet = {
+                    showFinishDialog = false
+                    flashcardState.resetAll()
+                },
+                onRepeatStillLearning = {
+                    if (flashcardState.stillLearning.isNotEmpty()) {
+                        showFinishDialog = false
+                        flashcardState.createStillLearningSet()
+                    }
+                },
                 totalCards = total.toShort(),
                 knownCount = flashcardState.alreadyKnow.size.toShort(),
-                stillLearningCount = flashcardState.stillLearning.size.toShort()
+                stillLearningCount = flashcardState.stillLearning.size.toShort(),
+                // show 'repeat whole set' button if we're NOT in still learning mode
+                showRepeatWholeSetButton = !flashcardState.isStillLearningMode,
+                // show 'still learning' button if flashcards marked as "still learning" exist
+                // and if we're NOT in still learning mode
+                showStillLearningButton = !flashcardState.isStillLearningMode && flashcardState.stillLearning.isNotEmpty()
             )
         }
     }
