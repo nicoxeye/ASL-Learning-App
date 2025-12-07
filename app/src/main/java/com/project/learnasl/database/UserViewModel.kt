@@ -35,4 +35,18 @@ class UserViewModel(
         return repository.getUserCount() > 0
     }
 
+    fun addExp(exp: Int) {
+        viewModelScope.launch {
+            val user = repository.getUser()
+            // DEBUG println("USER'S BEFORE EXP: ${user?.experience}")
+            repository.addExperience(exp)
+            currentUser.value = repository.getUser()
+            // DEBUG println("USER'S AFTER EXP: ${currentUser.value?.experience}")
+        }
+    }
+
+    suspend fun computeLvl() : Int? {
+        return repository.computeLvl()
+    }
+
 }

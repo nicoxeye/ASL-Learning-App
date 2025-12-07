@@ -28,7 +28,12 @@ import kotlin.collections.plus
 
 
 @Composable
-fun MatchGame(pairs: List<AslPair>, onBackClick: () -> Unit, onNewGame: () -> Unit) {
+fun MatchGame(
+    pairs: List<AslPair>,
+    onBackClick: () -> Unit,
+    onNewGame: () -> Unit,
+    onWin: () -> Unit,
+) {
     // remembers the selected (clicked) image and label by the user
     var selectedImage by remember { mutableStateOf<AslPair?>(null) }
     var selectedLabel by remember { mutableStateOf<String?>(null) }
@@ -188,12 +193,20 @@ fun MatchGame(pairs: List<AslPair>, onBackClick: () -> Unit, onNewGame: () -> Un
             }
         }
 
+        // if sthe dialog is shown the onWin method will run (which adds exp)
+        LaunchedEffect(showDialog) {
+            if (showDialog) {
+                onWin()
+            }
+        }
+
         if (showDialog) {
             MatchWinDialog(
                 onDismiss = { onBackClick() },
                 onConfirm = { onNewGame() },
                 elapsedTime = finalTime
             )
+
         }
 
     }
