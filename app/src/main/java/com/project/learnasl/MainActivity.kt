@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
 import com.project.learnasl.ui.theme.LearnASLTheme
 import androidx.compose.material3.NavigationBar
@@ -47,12 +48,14 @@ class MainActivity : ComponentActivity() {
                 val user = viewModel.currentUser.value
 
                 // default if something goes wrong
-                var username = "Unknown";
-                var experience = 0;
+                var username = "Unknown"
+                var experience = 0
+                var level = 1
 
                 if (user != null) {
                     username = user.name
                     experience = user.experience
+                    level = user.level
                 }
 
                 val navItemList = listOf(
@@ -66,7 +69,10 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     bottomBar = {
-                        NavigationBar {
+                        NavigationBar(
+                            containerColor = MaterialTheme.colorScheme.primaryContainer,
+                            contentColor = MaterialTheme.colorScheme.primary
+                        ) {
                             navItemList.forEachIndexed { index, item ->
                                 NavigationBarItem(
                                     selected = selectedIndex == index,
@@ -90,6 +96,7 @@ class MainActivity : ComponentActivity() {
                         selectedIndex,
                         username,
                         experience,
+                        level,
                         context = context
                     )
                 }
@@ -104,11 +111,12 @@ fun ContentScreen(modifier: Modifier,
                   selectedIndex : Int,
                   username : String,
                   experience: Int,
+                  level: Int,
                   context : Context) {
 
     when (selectedIndex) {
         0 -> HomePage(username, experience, context)
-        1 -> UserPage(username, experience)
+        1 -> UserPage(username, experience, level)
         2 -> { TODO() }
     }
 
