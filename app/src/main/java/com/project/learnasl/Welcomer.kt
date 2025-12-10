@@ -1,6 +1,5 @@
 package com.project.learnasl
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -31,7 +30,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.project.learnasl.database.UserViewModel
-import com.project.learnasl.userprofile.CreateUser
 import com.project.learnasl.utils.UserViewModelHelper
 import com.project.learnasl.utils.startMainActivity
 import com.project.learnasl.utils.startUserCreationActivity

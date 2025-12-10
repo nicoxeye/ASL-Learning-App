@@ -1,33 +1,34 @@
 package com.project.learnasl
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.Icon
 import androidx.compose.ui.Modifier
 import com.project.learnasl.ui.theme.LearnASLTheme
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
-import com.project.learnasl.Dashboard.components.Banner
-import com.project.learnasl.Dashboard.components.CardGrid
-import com.project.learnasl.Dashboard.components.Header
-import com.project.learnasl.Dashboard.components.LearningModesButtons
-import com.project.learnasl.Dashboard.components.UserSection
+import com.project.learnasl.Dashboard.components.BottomNavItem
+import com.project.learnasl.pages.HomePage
+import com.project.learnasl.pages.UserPage
 import com.project.learnasl.database.UserViewModel
-import com.project.learnasl.match.data.allAslPairs
 import com.project.learnasl.utils.UserViewModelHelper
-import com.project.learnasl.utils.startFlashcardsActivity
-import com.project.learnasl.utils.startMatchActivity
-import com.project.learnasl.utils.startQuizActivity
-import com.project.learnasl.utils.startCameraActivity
 import kotlin.getValue
 
 class MainActivity : ComponentActivity() {
@@ -54,40 +55,63 @@ class MainActivity : ComponentActivity() {
                     experience = user.experience
                 }
 
-                // get one random card refreshing each time MainActivity is opened
-                val ASLpair = allAslPairs.shuffled().first()
-                val label =  ASLpair.label
-                val image = ASLpair.drawing.imageRes
+                val navItemList = listOf(
+                    BottomNavItem("Home", Icons.Default.Home),
+                    BottomNavItem("Profile", Icons.Default.Person),
+                    BottomNavItem("Settings", Icons.Default.Settings)
+                )
 
-                //val scroll_state = rememberScrollState()
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.background)
-                ) {
-                    item {
-                        Row(
-                            modifier = Modifier.padding(top = 70.dp), // <- reducing size
-                            // of empty space makes space for any type of menu up here :D
-                        ) {}
-                        UserSection(username, experience)
-                        Spacer(modifier = Modifier.height(16.dp))
-                        LearningModesButtons()
-                        Spacer(modifier = Modifier.height(32.dp))
-                        Header()
-                        CardGrid(
-                            { startQuizActivity(context) },
-                            { startFlashcardsActivity(context) },
-                            { startMatchActivity(context) },
-                            { startCameraActivity(context = context) },
-                        )
-                        Spacer(modifier = Modifier.height(48.dp))
-                        Banner(label, image)
+                var selectedIndex by remember { mutableIntStateOf(0) }
+
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    bottomBar = {
+                        NavigationBar {
+                            navItemList.forEachIndexed { index, item ->
+                                NavigationBarItem(
+                                    selected = selectedIndex == index,
+                                    onClick = {
+                                        selectedIndex = index
+                                    },
+                                    icon = {
+                                        Icon(imageVector = item.icon, contentDescription = "Icon")
+                                    },
+                                    label = {
+                                        Text(text = item.label)
+                                    }
+                                )
+                            }
+                        }
                     }
+                ) {
+                        padding ->
+                    ContentScreen(
+                        modifier = Modifier.padding(padding),
+                        selectedIndex,
+                        username,
+                        experience,
+                        context = context
+                    )
                 }
             }
 
         }
     }
 }
+
+@Composable
+fun ContentScreen(modifier: Modifier,
+                  selectedIndex : Int,
+                  username : String,
+                  experience: Int,
+                  context : Context) {
+
+    when (selectedIndex) {
+        0 -> HomePage(username, experience, context)
+        1 -> UserPage(username, experience)
+        2 -> { TODO() }
+    }
+
+}
+
 
