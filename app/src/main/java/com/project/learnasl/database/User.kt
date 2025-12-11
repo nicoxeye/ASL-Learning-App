@@ -15,7 +15,7 @@ class User(
     val id: Int = 0,
     var name: String,
     var experience: Int = 0,
-    var level: Int = 0,
+    var level: Int = 1,
 ) {
 
     constructor(named: String) : this(name = named)
