@@ -4,10 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.project.learnasl.utils.DATABASE_NAME
+import com.project.learnasl.utils.DATABASE_VERSION
 
 @Database(
     entities = [User::class],
-    version = 1
+    version = DATABASE_VERSION
 )
 abstract class AppDatabase: RoomDatabase() {
     abstract val dao: UserDao
@@ -27,7 +29,7 @@ abstract class AppDatabase: RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "learn_asl_db"
+                    DATABASE_NAME
                 ).build()
 
                 INSTANCE = instance

@@ -40,7 +40,7 @@ import kotlin.getValue
 
 class Welcomer : ComponentActivity() {
 
-    private val viewModel by viewModels<UserViewModel> {
+    private val userViewModel by viewModels<UserViewModel> {
         UserViewModelHelper.getFactory(application)
     }
 
@@ -54,7 +54,7 @@ class Welcomer : ComponentActivity() {
             val showCreateUser = remember { mutableStateOf(false) }
 
             LaunchedEffect(Unit) {
-                showCreateUser.value = !viewModel.hasUser()
+                showCreateUser.value = !userViewModel.hasUser()
             }
 
 

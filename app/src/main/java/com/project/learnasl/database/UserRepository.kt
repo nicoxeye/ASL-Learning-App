@@ -15,4 +15,16 @@ class UserRepository(private val dao: UserDao) {
         return dao.getUser()
     }
 
+    suspend fun addExperience(exp: Int) {
+        val user = dao.getUser() ?: return
+        user.addExperience(exp)
+        user.computeLevel() // changes the exp into levels
+        dao.updateUser(user) // saves (updates) the exp change to db
+    }
+
+    suspend fun computeLvl() : Int? {
+       val lvl = getUser()?.computeLevel()
+        return lvl
+    }
+
 }
