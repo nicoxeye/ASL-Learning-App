@@ -3,6 +3,8 @@ package com.project.learnasl.utils
 import android.content.Context
 import android.content.Intent
 import com.project.learnasl.FlashcardsActivity
+import com.project.learnasl.LearningMode.LearnAlphabetActivity
+import com.project.learnasl.LearningMode.LearnNumbersActivity
 import com.project.learnasl.MainActivity
 import com.project.learnasl.MatchActivity
 import com.project.learnasl.QuizActivity
@@ -30,4 +32,12 @@ fun startCameraActivity(context: Context) {
 
 fun startUserCreationActivity(context: Context) {
     context.startActivity(Intent(context, UserCreationActivity::class.java))
+}
+
+fun startAlphabetModeActivity(context: Context){
+    context.startActivity(Intent(context, LearnAlphabetActivity::class.java))
+}
+
+fun startNumbersModeActivity(context: Context){
+    context.startActivity(Intent(context, LearnNumbersActivity::class.java))
 }

@@ -52,6 +52,16 @@
             android:name=".MainActivity"
             android:exported="false"
             android:theme="@style/Theme.LearnASL" />
+        <activity
+            android:name=".LearningMode.LearnAlphabetActivity"
+            android:exported="false"
+            android:label="@string/title_activity_quiz"
+            android:theme="@style/Theme.LearnASL" />
+        <activity
+            android:name=".LearningMode.LearnNumbersActivity"
+            android:exported="false"
+            android:label="@string/title_activity_quiz"
+            android:theme="@style/Theme.LearnASL" />
     </application>
 
 </manifest>

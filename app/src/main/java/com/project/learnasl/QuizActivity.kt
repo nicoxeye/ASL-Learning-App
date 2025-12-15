@@ -8,8 +8,8 @@ import androidx.activity.enableEdgeToEdge
 import com.project.learnasl.QuestionActivity.Model.QuestionModel
 import com.project.learnasl.QuestionActivity.QuestionActivity
 import com.project.learnasl.ui.theme.LearnASLTheme
-import com.project.learnasl.match.data.AslPair
-import com.project.learnasl.match.data.allAslPairs
+import com.project.learnasl.data.AslPair
+import com.project.learnasl.data.allLettersAslPairs
 
 const val question = "What sign is this?"
 class QuizActivity : ComponentActivity() {
@@ -20,7 +20,7 @@ class QuizActivity : ComponentActivity() {
         setContent {
             LearnASLTheme {
                 val intent = Intent(this, QuestionActivity::class.java)
-                val gameAslPairs = allAslPairs.shuffled().take(10) // take 10 sample questions
+                val gameAslPairs = allLettersAslPairs.shuffled().take(10) // take 10 sample questions
                 intent.putParcelableArrayListExtra("list",ArrayList(questionsList(gameAslPairs)))
                 startActivity(intent)
 //                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -35,7 +35,7 @@ class QuizActivity : ComponentActivity() {
     private fun questionsList(pairs: List<AslPair>): List<QuestionModel>{
         return pairs.mapIndexed { index, item ->
             val correct = item.label
-            val other_labels = allAslPairs
+            val other_labels = allLettersAslPairs
                 .map { it.label }
                 .filter { it != correct }
                 .shuffled()

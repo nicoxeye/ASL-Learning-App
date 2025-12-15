@@ -28,9 +28,11 @@ import com.project.learnasl.ui.theme.LearnASLTheme
 
 
 @Composable
-@Preview
+//@Preview
 fun LearningModesButtons(
-    // button logic here when implementing
+    onAlphabetClick: () -> Unit,
+    onNumbersClick: () -> Unit,
+    onMixedClick: () -> Unit,
 ){
     Row (modifier = Modifier
         .fillMaxWidth()
@@ -42,21 +44,24 @@ fun LearningModesButtons(
             icon_resource = R.drawable.alphabet_icon,
             text = "Learn Alphabet",
             modifier = Modifier
-                .weight(1f)
+                .weight(1f),
+            onClick = onAlphabetClick
         )
         Spacer(Modifier.width(12.dp))
         LearnButton(
             icon_resource = R.drawable.number_icon,
             text = "Learn Numbers",
             modifier = Modifier
-                .weight(1f)
+                .weight(1f),
+            onClick = onNumbersClick
         )
         Spacer(Modifier.width(12.dp))
         LearnButton(
             icon_resource = R.drawable.mixed_icon,
             text = "Mixed Mode",
             modifier = Modifier
-                .weight(1f)
+                .weight(1f),
+            onClick = onMixedClick
         )
     }
 }
@@ -65,14 +70,14 @@ fun LearningModesButtons(
 fun LearnButton(
     icon_resource: Int,
     text: String,
-    onClick:(()->Unit)?=null,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     LearnASLTheme {
         Column(
             modifier = modifier
                 .fillMaxHeight()
-                .clickable(enabled = onClick != null) { onClick?.invoke() }
+                .clickable { onClick() }
                 .clip(RoundedCornerShape(10.dp))
                 .background(color = MaterialTheme.colorScheme.primaryContainer)
                 .padding(8.dp),

@@ -23,7 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.project.learnasl.R
-import com.project.learnasl.match.data.AslPair
+import com.project.learnasl.data.AslPair
 import kotlin.collections.plus
 
 
