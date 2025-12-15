@@ -10,7 +10,7 @@ data class AslPair(
     val label: String
 ) : Parcelable
 
-val allAslPairs = listOf(
+val allLettersAslPairs = listOf(
     AslPair(Drawing(R.drawable.asl_a, "A"), "A"),
     AslPair(Drawing(R.drawable.asl_b, "B"), "B"),
     AslPair(Drawing(R.drawable.asl_c, "C"), "C"),

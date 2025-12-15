@@ -17,7 +17,7 @@ import com.project.learnasl.Dashboard.components.CardGrid
 import com.project.learnasl.Dashboard.components.Header
 import com.project.learnasl.Dashboard.components.LearningModesButtons
 import com.project.learnasl.Dashboard.components.UserSection
-import com.project.learnasl.match.data.allAslPairs
+import com.project.learnasl.match.data.allLettersAslPairs
 import com.project.learnasl.ui.theme.LearnASLTheme
 import com.project.learnasl.utils.startAlphabetModeActivity
 import com.project.learnasl.utils.startCameraActivity
@@ -33,7 +33,7 @@ fun HomePage(username : String,
 ) {
     LearnASLTheme {
         // get one random card refreshing each time MainActivity is opened
-        val ASLpair = allAslPairs.shuffled().first()
+        val ASLpair = allLettersAslPairs.shuffled().first()
         val label = ASLpair.label
         val image = ASLpair.drawing.imageRes
 
