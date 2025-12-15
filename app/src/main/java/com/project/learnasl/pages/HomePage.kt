@@ -19,9 +19,11 @@ import com.project.learnasl.Dashboard.components.LearningModesButtons
 import com.project.learnasl.Dashboard.components.UserSection
 import com.project.learnasl.match.data.allAslPairs
 import com.project.learnasl.ui.theme.LearnASLTheme
+import com.project.learnasl.utils.startAlphabetModeActivity
 import com.project.learnasl.utils.startCameraActivity
 import com.project.learnasl.utils.startFlashcardsActivity
 import com.project.learnasl.utils.startMatchActivity
+import com.project.learnasl.utils.startNumbersModeActivity
 import com.project.learnasl.utils.startQuizActivity
 
 @Composable
@@ -47,7 +49,11 @@ fun HomePage(username : String,
                     ) { }
                 UserSection(username, experience)
                 Spacer(modifier = Modifier.height(16.dp))
-                LearningModesButtons()
+                LearningModesButtons(
+                    onAlphabetClick = { startAlphabetModeActivity(context) },
+                    onNumbersClick = { startNumbersModeActivity(context) },
+                    onMixedClick = {},
+                )
                 Spacer(modifier = Modifier.height(32.dp))
                 Header()
                 CardGrid(

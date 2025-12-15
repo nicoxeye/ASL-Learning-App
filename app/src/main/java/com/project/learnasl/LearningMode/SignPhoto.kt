@@ -24,7 +24,8 @@ import com.project.learnasl.ui.theme.LearnASLTheme
 //val label: String
 
 @Composable
-fun SignPhoto(item: AslPair) {
+fun SignPhoto(item: AslPair,
+              letOrNum: String) {
     LearnASLTheme {
         Column(
             modifier = Modifier.fillMaxWidth()
@@ -41,7 +42,7 @@ fun SignPhoto(item: AslPair) {
                 // contentScale = ContentScale.Crop
             )
             Text(
-                text = "Letter ${item.label}",
+                text = "$letOrNum ${item.label}",
                 fontSize = 40.sp,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -64,5 +65,5 @@ fun SignPhoto(item: AslPair) {
 fun Preview(){
     val asl_pair = AslPair(Drawing(R.drawable.asl_a,
         "A"), "A")
-    SignPhoto(asl_pair)
+    SignPhoto( asl_pair, "Letter")
 }
