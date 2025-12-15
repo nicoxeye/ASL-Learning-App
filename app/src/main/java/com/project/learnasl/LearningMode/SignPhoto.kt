@@ -16,8 +16,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.project.learnasl.R
-import com.project.learnasl.match.data.AslPair
-import com.project.learnasl.match.data.Drawing
+import com.project.learnasl.data.AslPair
+import com.project.learnasl.data.Drawing
 import com.project.learnasl.ui.theme.LearnASLTheme
 
 //val drawing: Drawing,

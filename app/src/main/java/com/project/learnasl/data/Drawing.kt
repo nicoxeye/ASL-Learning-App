@@ -1,4 +1,4 @@
-package com.project.learnasl.match.data
+package com.project.learnasl.data
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

@@ -6,7 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.project.learnasl.MainActivity
-import com.project.learnasl.match.data.allNumbersAslPair
+import com.project.learnasl.data.allNumbersAslPair
 import com.project.learnasl.ui.theme.LearnASLTheme
 
 class LearnNumbersActivity : ComponentActivity() {

@@ -17,7 +17,7 @@ import com.project.learnasl.Dashboard.components.CardGrid
 import com.project.learnasl.Dashboard.components.Header
 import com.project.learnasl.Dashboard.components.LearningModesButtons
 import com.project.learnasl.Dashboard.components.UserSection
-import com.project.learnasl.match.data.allLettersAslPairs
+import com.project.learnasl.data.allLettersAslPairs
 import com.project.learnasl.ui.theme.LearnASLTheme
 import com.project.learnasl.utils.startAlphabetModeActivity
 import com.project.learnasl.utils.startCameraActivity

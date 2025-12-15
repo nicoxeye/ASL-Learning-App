@@ -11,7 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.project.learnasl.database.UserViewModel
-import com.project.learnasl.match.data.allLettersAslPairs
+import com.project.learnasl.data.allLettersAslPairs
 import com.project.learnasl.ui.theme.LearnASLTheme
 import com.project.learnasl.utils.MATCH_EXP
 import com.project.learnasl.utils.UserViewModelHelper
