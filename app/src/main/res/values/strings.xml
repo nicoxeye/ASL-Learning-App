@@ -6,4 +6,5 @@
     <string name="title_activity_welcomer">Welcomer</string>
     <string name="title_activity_user_creation">UserCreationActivity</string>
     <string name="title_activity_create_user">CreateUser</string>
+    <string name="title_activity_ai">AiActivity</string>
 </resources>
