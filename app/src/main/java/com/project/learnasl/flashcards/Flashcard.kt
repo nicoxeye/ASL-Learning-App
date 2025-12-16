@@ -1,5 +1,6 @@
 package com.project.learnasl.flashcards
 
+import com.project.learnasl.R
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
@@ -15,7 +16,11 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -47,7 +52,11 @@ import kotlin.math.min
 //      * swipe left/right animation (+ while swiping: blurry layer with "KNOW"/"STILL LEARNING")
 
 @Composable
-fun FlashcardFront(image: Int, onClick: () -> Unit) {
+fun FlashcardFront(image: Int,
+                   onClick: () -> Unit, // flip animation
+                   isFavourite: Boolean,
+                   onFavouriteClick: () -> Unit) // toggle favourite
+{
     Box (
         contentAlignment = Alignment.Center,
         modifier = Modifier
@@ -65,12 +74,18 @@ fun FlashcardFront(image: Int, onClick: () -> Unit) {
                 .background(Color.White),
             contentDescription = null
         )
+
+        // 'favourite' icon
+        FavouriteIcon(isFavourite, onFavouriteClick)
     }
 }
 
 
 @Composable
-fun FlashcardBack(text: String, onClick: () -> Unit) {
+fun FlashcardBack(text: String,
+                  onClick: () -> Unit,
+                  isFavourite: Boolean,
+                  onFavouriteClick: () -> Unit) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
@@ -86,6 +101,9 @@ fun FlashcardBack(text: String, onClick: () -> Unit) {
             fontWeight = FontWeight.Bold,
             fontSize = 70.sp
         )
+
+        // 'favourite' icon
+        FavouriteIcon(isFavourite, onFavouriteClick)
     }
 }
 
@@ -175,6 +193,12 @@ fun FlashcardAnimation(flashcardsState: FlashcardsState,
             Text("No flashcards available")
         }
         return
+    }
+
+    // favourite flashcards logic
+    val isCurrentFavourite = currentFlashcard.isFavourite
+    val onFavouriteToggle: () -> Unit = {
+        flashcardsState.toggleFavourite(currentFlashcard)
     }
 
     // OUTER BOX: handles position/rotation/swiping animation
@@ -269,7 +293,9 @@ fun FlashcardAnimation(flashcardsState: FlashcardsState,
                     // show front of the flashcard (image)
                     FlashcardFront(
                         image = currentFlashcard.imageRes,
-                        onClick = { face = face.flipped() }
+                        onClick = { face = face.flipped() },
+                        isFavourite = isCurrentFavourite,
+                        onFavouriteClick = onFavouriteToggle
                     )
                 } else {
                     // show back of the flashcard (text)}
@@ -280,7 +306,9 @@ fun FlashcardAnimation(flashcardsState: FlashcardsState,
                     ) {
                         FlashcardBack(
                             text = currentFlashcard.text,
-                            onClick = { face = face.flipped() }
+                            onClick = { face = face.flipped() },
+                            isFavourite = isCurrentFavourite,
+                            onFavouriteClick = onFavouriteToggle
                         )
                     }
                 }
@@ -288,5 +316,23 @@ fun FlashcardAnimation(flashcardsState: FlashcardsState,
             // OVERLAY WITH TEXT: "KNOW" (swipe right)/"STILL LEARNING" (swipe left)
             SwipeOverlay(effectiveOffsetX, overlayAlpha, isFront)
         }
+    }
+}
+
+@Composable
+fun BoxScope.FavouriteIcon(isFavourite: Boolean, onFavouriteClick: () -> Unit) {
+    IconButton(
+        onClick = onFavouriteClick,
+        modifier = Modifier
+            .align(Alignment.TopEnd)
+            .padding(8.dp)
+    ) {
+        Icon(
+            painter = painterResource(
+                id = if (isFavourite) R.drawable.star_filled else R.drawable.star_empty
+            ),
+            contentDescription =  if (isFavourite) "Remove from favourites" else "Add to favourites",
+            modifier = Modifier.size(32.dp)
+        )
     }
 }

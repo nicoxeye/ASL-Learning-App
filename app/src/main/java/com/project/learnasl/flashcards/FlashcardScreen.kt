@@ -40,43 +40,13 @@ import com.project.learnasl.ui.theme.LearnASLTheme
 
 @Composable
 fun FlashcardScreen(
-    onBackClick: () -> Unit, // back to menu,
-    initialFlashcards: List<Flashcard> ? = null
+    onBackClick: () -> Unit, // back to menu, -> change it to back to flashcardCategories
+    initialFlashcards: List<Flashcard>, // list transmitted from flashcardCategories
+    title: String // title displayed next to the back button
 ) {
-
-    // default flashcard set
-    val defaultFlashcardsSet = listOf(
-        Flashcard(R.drawable.asl_a, "A"),
-        Flashcard(R.drawable.asl_b, "B"),
-        Flashcard(R.drawable.asl_c, "C"),
-        Flashcard(R.drawable.asl_d, "D"),
-        Flashcard(R.drawable.asl_e, "E"),
-        Flashcard(R.drawable.asl_f, "F"),
-        Flashcard(R.drawable.asl_g, "G"),
-        Flashcard(R.drawable.asl_h, "H"),
-        Flashcard(R.drawable.asl_i, "I"),
-        Flashcard(R.drawable.asl_j, "J"),
-        Flashcard(R.drawable.asl_k, "K"),
-        Flashcard(R.drawable.asl_l, "L"),
-        Flashcard(R.drawable.asl_m, "M"),
-        Flashcard(R.drawable.asl_n, "N"),
-        Flashcard(R.drawable.asl_o, "O"),
-        Flashcard(R.drawable.asl_p, "P"),
-        Flashcard(R.drawable.asl_q, "Q"),
-        Flashcard(R.drawable.asl_r, "R"),
-        Flashcard(R.drawable.asl_s, "S"),
-        Flashcard(R.drawable.asl_t, "T"),
-        Flashcard(R.drawable.asl_u, "U"),
-        Flashcard(R.drawable.asl_v, "V"),
-        Flashcard(R.drawable.asl_w, "W"),
-        Flashcard(R.drawable.asl_x, "X"),
-        Flashcard(R.drawable.asl_y, "Y"),
-        Flashcard(R.drawable.asl_z, "Z")
-    )
-
     val flashcardState = remember {
         FlashcardsState(
-            flashcards = initialFlashcards ?: defaultFlashcardsSet
+            flashcards = initialFlashcards
         )
     }
 
@@ -117,7 +87,7 @@ fun FlashcardScreen(
                     Text(
                         text =
                             if (flashcardState.isStillLearningMode) "Still learning Mode"
-                            else "Flashcards: ASL Alphabet",
+                            else title,
                         fontSize = 20.sp,
                         color = MaterialTheme.colorScheme.onBackground,
                         style = MaterialTheme.typography.labelLarge
@@ -196,14 +166,4 @@ fun FlashcardScreen(
             )
         }
     }
-}
-
-
-
-@Preview(showBackground = true)
-@Composable
-fun FlashcardScreenPreview() {
-    FlashcardScreen(
-        onBackClick = {}
-    )
 }

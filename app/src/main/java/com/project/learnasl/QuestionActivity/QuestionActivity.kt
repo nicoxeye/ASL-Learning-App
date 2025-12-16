@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.project.learnasl.MainActivity
 import com.project.learnasl.QuestionActivity.Model.QuestionModel
+import com.project.learnasl.QuizActivity
 import com.project.learnasl.ScoreActivity.ScoreActivity
 import com.project.learnasl.database.UserViewModel
 import com.project.learnasl.ui.theme.LearnASLTheme
@@ -37,7 +38,7 @@ class QuestionActivity : AppCompatActivity() {
                     questions = receivedList,
                     onBackClick = {
                         finish()
-                        val intent= Intent(this, MainActivity::class.java)
+                        val intent= Intent(this, QuizActivity::class.java)
                         startActivity(intent)
                        },
                     onFinish = {
@@ -47,6 +48,7 @@ class QuestionActivity : AppCompatActivity() {
                         userViewModel.addExp(exp)
                         Log.d("EXP ADDITION","ADDED EXP VAL: $exp")
 
+                        intent.putParcelableArrayListExtra("questions_list", receivedList)
                         intent.putExtra("Score", finalScore)
                         startActivity(intent)
                         finish()
