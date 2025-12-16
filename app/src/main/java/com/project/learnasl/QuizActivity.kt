@@ -29,7 +29,11 @@ class QuizActivity : ComponentActivity() {
 
                 if (selectedPairs == null) {
                     QuizCategories(
-                        onBackClick = { finish() }, // go back to mainActivity
+                        onBackClick = {
+                            finish()
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
+                        }, // go back to mainActivity
                         onCategoryClick= { pairs ->
                             selectedPairs = pairs // alphabet or numbers
 

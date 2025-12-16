@@ -97,6 +97,7 @@ fun goBackToMain(context: Context) {
     context.startActivity(Intent(context, MainActivity::class.java))
 }
 
+// lets the user choose the category again but you can change it if you want to
 fun startNewQuiz(context: Context) {
     context.startActivity(Intent(context, QuizActivity::class.java))
 }

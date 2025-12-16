@@ -1,4 +1,4 @@
-package com.project.learnasl.QuestionActivity
+package com.project.learnasl.match
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -26,17 +26,18 @@ import com.project.learnasl.data.allLettersAslPairs
 import com.project.learnasl.data.allNumbersAslPair
 import com.project.learnasl.flashcards.Category
 import com.project.learnasl.flashcards.EmptyFavouritesDialog
+import com.project.learnasl.flashcards.model.Flashcard
 import com.project.learnasl.flashcards.model.aslAlphabetFlashcards
 import com.project.learnasl.flashcards.model.aslNumbersFlashcards
 import com.project.learnasl.ui.theme.LearnASLTheme
 
 @Composable
-fun QuizCategories (
+fun MatchCategories (
     onBackClick: () -> Unit,
     onCategoryClick: (pairs: List<AslPair>) -> Unit
-) {
+){
     LearnASLTheme(
-       // darkTheme = true
+        //darkTheme = true
     ) {
         LazyColumn(
             modifier = Modifier
@@ -57,7 +58,7 @@ fun QuizCategories (
                     }
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "Quiz Categories",
+                        text = "Match Categories",
                         fontSize = 20.sp,
                         color = MaterialTheme.colorScheme.onBackground,
                         style = MaterialTheme.typography.labelLarge
