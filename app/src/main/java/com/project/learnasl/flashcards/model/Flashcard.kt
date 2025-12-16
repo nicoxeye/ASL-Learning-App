@@ -7,7 +7,8 @@ import com.project.learnasl.data.allNumbersAslPair
 
 data class Flashcard(
     val imageRes: Int,
-    val text: String
+    val text: String,
+    val isFavourite: Boolean = false // val cause we only copy
 )
 
 
@@ -27,3 +28,6 @@ val aslAlphabetFlashcards = allLettersAslPairs.map {
 val aslNumbersFlashcards = allNumbersAslPair.map{
     it.toFlashcard()
 }
+
+// all available sets we have (i needed it for flashcardsState....)
+val allAppFlashcards: List<Flashcard> = aslNumbersFlashcards + aslAlphabetFlashcards

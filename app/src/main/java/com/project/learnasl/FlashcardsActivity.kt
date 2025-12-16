@@ -23,6 +23,8 @@ import com.project.learnasl.flashcards.FlashcardCategories
 import com.project.learnasl.flashcards.FlashcardScreen
 import com.project.learnasl.flashcards.model.Flashcard
 import com.project.learnasl.data.AslPair
+import com.project.learnasl.flashcards.model.FlashcardsState
+import com.project.learnasl.flashcards.model.allAppFlashcards
 import com.project.learnasl.ui.theme.LearnASLTheme
 
 class FlashcardsActivity : ComponentActivity() {
@@ -30,14 +32,18 @@ class FlashcardsActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            // null before selecting categories
-            var selectedFlashcardsSet by remember { mutableStateOf<List<Flashcard>?>(null) }
-            var selectedTitle by remember { mutableStateOf<String?>(null)}
             LearnASLTheme {
                Surface(
                    modifier = Modifier.fillMaxSize(),
                    color = MaterialTheme.colorScheme.background
                ) {
+                   // null before selecting categories
+                   var selectedFlashcardsSet by remember { mutableStateOf<List<Flashcard>?>(null) }
+                   var selectedTitle by remember { mutableStateOf<String?>(null)}
+
+                   val flashcardsState = remember {
+                       FlashcardsState(flashcards = allAppFlashcards)
+                   }
                    // CATEGORIES VIEW
                    if (selectedFlashcardsSet == null) {
                        FlashcardCategories(
@@ -52,7 +58,8 @@ class FlashcardsActivity : ComponentActivity() {
                                selectedTitle = title
                                // after setting the states, compose should automatically start FlashcardScreen
                                // (since it's not be null anymore)
-                           }
+                           },
+                           favouriteFlashcards = flashcardsState.favouriteFlashcards
                        )
                    }
                    else {
