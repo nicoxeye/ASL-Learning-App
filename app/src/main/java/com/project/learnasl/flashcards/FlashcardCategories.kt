@@ -84,7 +84,7 @@ fun FlashcardCategories(
                     }
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "Categories",
+                        text = "Flashcards Categories",
                         fontSize = 20.sp,
                         color = MaterialTheme.colorScheme.onBackground,
                         style = MaterialTheme.typography.labelLarge

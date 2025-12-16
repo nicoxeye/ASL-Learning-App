@@ -47,6 +47,7 @@ class QuestionActivity : AppCompatActivity() {
                         userViewModel.addExp(exp)
                         Log.d("EXP ADDITION","ADDED EXP VAL: $exp")
 
+                        intent.putParcelableArrayListExtra("questions_list", receivedList)
                         intent.putExtra("Score", finalScore)
                         startActivity(intent)
                         finish()
