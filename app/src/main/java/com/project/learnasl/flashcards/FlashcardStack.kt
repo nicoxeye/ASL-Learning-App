@@ -14,7 +14,8 @@ import com.project.learnasl.flashcards.model.FlashcardsState
 fun FlashcardStack(
     flashcardsState: FlashcardsState,
     maxVisible: Int = 3,
-    onFinished: () -> Unit
+    onFinished: () -> Unit,
+    addExp: () -> Unit
 ) {
 
     val currentIndex = flashcardsState.currentIndex
@@ -50,7 +51,7 @@ fun FlashcardStack(
                 )
         ) {
             // flashcard on top with its full animation
-            FlashcardAnimation(flashcardsState, onFinished)
+            FlashcardAnimation(flashcardsState, onFinished, addExp)
         }
     }
 }
