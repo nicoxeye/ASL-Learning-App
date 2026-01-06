@@ -19,6 +19,7 @@ import com.project.learnasl.Dashboard.components.LearningModesButtons
 import com.project.learnasl.Dashboard.components.UserSection
 import com.project.learnasl.data.allLettersAslPairs
 import com.project.learnasl.ui.theme.LearnASLTheme
+import com.project.learnasl.utils.startAiModeActivity
 import com.project.learnasl.utils.startAlphabetModeActivity
 import com.project.learnasl.utils.startCameraActivity
 import com.project.learnasl.utils.startFlashcardsActivity
@@ -60,7 +61,7 @@ fun HomePage(username : String,
                     { startQuizActivity(context) },
                     { startFlashcardsActivity(context) },
                     { startMatchActivity(context) },
-                    { startCameraActivity(context = context) },
+                    { startAiModeActivity(context) },
                 )
                 Spacer(modifier = Modifier.height(48.dp))
                 Banner(label, image)

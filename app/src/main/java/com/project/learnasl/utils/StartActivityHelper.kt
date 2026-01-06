@@ -2,6 +2,7 @@ package com.project.learnasl.utils
 
 import android.content.Context
 import android.content.Intent
+import com.project.learnasl.AiActivity
 import com.project.learnasl.FlashcardsActivity
 import com.project.learnasl.LearningMode.LearnAlphabetActivity
 import com.project.learnasl.LearningMode.LearnNumbersActivity
@@ -40,4 +41,8 @@ fun startAlphabetModeActivity(context: Context){
 
 fun startNumbersModeActivity(context: Context){
     context.startActivity(Intent(context, LearnNumbersActivity::class.java))
+}
+
+fun startAiModeActivity(context: Context) {
+    context.startActivity(Intent(context, AiActivity::class.java))
 }
