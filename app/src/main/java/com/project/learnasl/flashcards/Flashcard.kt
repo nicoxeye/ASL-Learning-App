@@ -152,7 +152,8 @@ fun BoxScope.SwipeOverlay(offsetX: Float, overlayAlpha: Float, isFront: Boolean)
 
 @Composable
 fun FlashcardAnimation(flashcardsState: FlashcardsState,
-                       onFinished: () -> Unit) {
+                       onFinished: () -> Unit,
+                       addExp: () -> Unit) {
     // FLIP FRONT/BACK
     var face by remember { mutableStateOf(CardFace.Front) }
 
@@ -237,6 +238,8 @@ fun FlashcardAnimation(flashcardsState: FlashcardsState,
                                 offsetX.animateTo(1000f, tween(300))
 
                                 flashcardsState.markAsAlreadyKnown(currentFlashcard)
+                                addExp() // adds experience points if flashcard marked as already known
+
                                 // check if it's the last flashcard
                                 if (flashcardsState.currentIndex == flashcardsState.currentFlashcards.lastIndex) {
                                     onFinished()

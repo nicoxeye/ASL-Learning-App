@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -23,12 +24,22 @@ import com.project.learnasl.flashcards.FlashcardCategories
 import com.project.learnasl.flashcards.FlashcardScreen
 import com.project.learnasl.flashcards.model.Flashcard
 import com.project.learnasl.data.AslPair
+import com.project.learnasl.database.UserViewModel
 import com.project.learnasl.flashcards.model.FlashcardsState
 import com.project.learnasl.flashcards.model.allAppFlashcards
 import com.project.learnasl.ui.theme.LearnASLTheme
+import com.project.learnasl.utils.FLASHCARDS_EXP
+import com.project.learnasl.utils.MATCH_EXP
+import com.project.learnasl.utils.UserViewModelHelper
+import kotlin.getValue
 
 class FlashcardsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        val userViewModel by viewModels<UserViewModel> {
+            UserViewModelHelper.getFactory(application)
+        }
+
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
@@ -70,7 +81,8 @@ class FlashcardsActivity : ComponentActivity() {
                                // after user clicks on the back button the state is cleaned to return to FlashcardCategories
                                selectedFlashcardsSet = null
                                selectedTitle = null
-                           }
+                           },
+                           addExp = { userViewModel.addExp(FLASHCARDS_EXP) }
                        )
                    }
                 }

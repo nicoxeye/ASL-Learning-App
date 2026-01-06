@@ -42,7 +42,8 @@ import com.project.learnasl.ui.theme.LearnASLTheme
 fun FlashcardScreen(
     onBackClick: () -> Unit, // back to menu, -> change it to back to flashcardCategories
     initialFlashcards: List<Flashcard>, // list transmitted from flashcardCategories
-    title: String // title displayed next to the back button
+    title: String, // title displayed next to the back button,
+    addExp: () -> Unit
 ) {
     val flashcardState = remember {
         FlashcardsState(
@@ -137,7 +138,8 @@ fun FlashcardScreen(
                 ) {
                     FlashcardStack(
                         flashcardState,
-                        onFinished = { showFinishDialog = true }
+                        onFinished = { showFinishDialog = true },
+                        addExp = addExp
                     )
                 }
             }

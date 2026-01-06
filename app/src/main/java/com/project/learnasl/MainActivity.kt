@@ -29,6 +29,7 @@ import com.project.learnasl.Dashboard.components.BottomNavItem
 import com.project.learnasl.pages.HomePage
 import com.project.learnasl.pages.UserPage
 import com.project.learnasl.database.UserViewModel
+import com.project.learnasl.pages.SettingsPage
 import com.project.learnasl.utils.UserViewModelHelper
 import kotlin.getValue
 
@@ -117,7 +118,7 @@ fun ContentScreen(modifier: Modifier,
     when (selectedIndex) {
         0 -> HomePage(username, experience, context)
         1 -> UserPage(username, experience, level)
-        2 -> { TODO() }
+        2 -> SettingsPage(username, experience, level)
     }
 
 }
