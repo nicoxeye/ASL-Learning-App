@@ -1,15 +1,18 @@
 package com.project.learnasl.ai
 
 import android.graphics.Bitmap
+import androidx.core.graphics.scale
 
-fun Bitmap.centerCrop(desiredWidth: Int, desiredHeight: Int) : Bitmap {
-    val xStart = (width - desiredWidth) / 2
-    val yStart = (height - desiredHeight) / 2
+fun Bitmap.rotate(degrees: Int): Bitmap {
+    if (degrees == 0) return this
 
-    if (xStart < 0 || yStart < 0 || desiredWidth > width || desiredHeight > height) {
-        throw IllegalArgumentException("Invalid arguments for center cropping")
+    val matrix = android.graphics.Matrix().apply {
+        postRotate(degrees.toFloat())
     }
 
-    // creates crop effect :)
-    return Bitmap.createBitmap(this, xStart, yStart, desiredWidth, desiredHeight)
+    return Bitmap.createBitmap(this, 0, 0, width, height, matrix, true)
+}
+
+fun Bitmap.resize(width: Int, height: Int): Bitmap {
+    return this.scale(width, height)
 }

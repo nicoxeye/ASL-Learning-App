@@ -10,21 +10,25 @@ class SignImageAnalyzer(
     private val classifier: SignClassifier,
     private val onResults: (List<Classification>) -> Unit
 ): ImageAnalysis.Analyzer {
-
-    // skipping frames to make it analyze once a second
-    private var frameSkipCounter = 0
+    private var lastAnalyzedTime = 0L
 
     override fun analyze(image: ImageProxy) {
+        val currentTime = System.currentTimeMillis()
 
-        if (frameSkipCounter % 60 == 0) {
+        // analyse every second
+        if (currentTime - lastAnalyzedTime >= 1_000) {
+            lastAnalyzedTime = currentTime
+
             val rotationDegrees = image.imageInfo.rotationDegrees
-            val bitmap =
-                image.toBitmap() // TODO: need the actual img width and height the model expects...
-                    .centerCrop(224, 224)
-            val results = classifier.classify(bitmap, rotationDegrees)
+
+            val bitmap = image
+                .toBitmap()
+                .rotate(rotationDegrees)
+                .resize(224, 224)
+
+            val results = classifier.classify(bitmap)
             onResults(results)
         }
-        frameSkipCounter++
 
         image.close()
     }

@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.Camera
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -35,7 +36,7 @@ import androidx.core.content.PackageManagerCompat
 import com.project.learnasl.ai.CameraPreview
 import com.project.learnasl.ai.SignImageAnalyzer
 import com.project.learnasl.ai.domain.Classification
-import com.project.learnasl.data.TfLiteSignClassifier
+import com.project.learnasl.ai.TfLiteSignClassifier
 import com.project.learnasl.ui.theme.LearnASLTheme
 
 // AI Landmark Recognition With Tensorflow Lite and CameraX on Android
@@ -53,19 +54,23 @@ class AiActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LearnASLTheme {
+
                 var classifications by remember {
                     mutableStateOf(emptyList<Classification>())
                 }
+
                 val analyzer = remember {
                     SignImageAnalyzer (
                         classifier = TfLiteSignClassifier(
                             context = applicationContext
                         ),
                         onResults = {
+                            Log.d("ASL", it.toString())
                             classifications = it
                         }
                     )
                 }
+
                 val controller = remember {
                     LifecycleCameraController(applicationContext).apply {
                         setEnabledUseCases(CameraController.IMAGE_ANALYSIS)
@@ -77,7 +82,7 @@ class AiActivity : ComponentActivity() {
                 }
 
                 Box(
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     CameraPreview(
                         controller,
@@ -91,12 +96,15 @@ class AiActivity : ComponentActivity() {
                             .background(MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f)) // semi-transparent
                             .padding(8.dp)
                     ) {
-                        classifications.forEach {
+                        classifications.firstOrNull()?.let {
                             Text(
                                 text = it.name,
-                                modifier = Modifier.fillMaxWidth(),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f))
+                                    .padding(vertical = 16.dp),
                                 textAlign = TextAlign.Center,
-                                fontSize = 20.sp,
+                                fontSize = 24.sp,
                                 color = MaterialTheme.colorScheme.background // contrasts overlay
                             )
                         }
