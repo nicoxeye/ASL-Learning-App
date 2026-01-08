@@ -99,7 +99,7 @@ fun GreetingScreen(onTimeout: () -> Unit) {
                     brush = Brush.verticalGradient(
                         colors = listOf(
                             MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
-                            MaterialTheme.colorScheme.secondary.copy(alpha = 0.8f)
+                            MaterialTheme.colorScheme.inversePrimary.copy(alpha = 0.8f)
                         )
                     )
                 ),

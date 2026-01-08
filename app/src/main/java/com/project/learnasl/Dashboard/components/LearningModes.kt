@@ -56,6 +56,7 @@ fun LearningModesButtons(
             onClick = onNumbersClick
         )
         Spacer(Modifier.width(12.dp))
+        /*
         LearnButton(
             icon_resource = R.drawable.mixed_icon,
             text = "Mixed Mode",
@@ -63,6 +64,8 @@ fun LearningModesButtons(
                 .weight(1f),
             onClick = onMixedClick
         )
+
+         */
     }
 }
 

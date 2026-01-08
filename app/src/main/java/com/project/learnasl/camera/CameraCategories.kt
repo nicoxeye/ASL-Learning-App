@@ -1,4 +1,4 @@
-package com.project.learnasl.match
+package com.project.learnasl.camera
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -21,21 +22,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.project.learnasl.R
-import com.project.learnasl.data.AslPair
-import com.project.learnasl.data.allLettersAslPairs
-import com.project.learnasl.data.allNumbersAslPair
 import com.project.learnasl.flashcards.Category
-import com.project.learnasl.flashcards.EmptyFavouritesDialog
-import com.project.learnasl.flashcards.model.Flashcard
-import com.project.learnasl.flashcards.model.aslAlphabetFlashcards
-import com.project.learnasl.flashcards.model.aslNumbersFlashcards
 import com.project.learnasl.ui.theme.LearnASLTheme
 
 @Composable
-fun MatchCategories (
+fun CameraCategories (
     onBackClick: () -> Unit,
-    onCategoryClick: (pairs: List<AslPair>) -> Unit
-){
+    onCategoryClick: (value: Int) -> Unit
+) {
     LearnASLTheme(
         //darkTheme = true
     ) {
@@ -58,17 +52,20 @@ fun MatchCategories (
                     }
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "Match Categories",
+                        text = "Camera Categories",
                         fontSize = 20.sp,
                         color = MaterialTheme.colorScheme.onBackground,
                         style = MaterialTheme.typography.labelLarge
                     )
                 }
             }
+
+
             // categories list
             item {
                 Column(
-                    modifier = Modifier.padding(horizontal = 24.dp)
+                    modifier = Modifier
+                        .padding(horizontal = 24.dp)
                 ) {
                     Row(
                         modifier = Modifier
@@ -77,12 +74,10 @@ fun MatchCategories (
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Category(
-                            R.drawable.alphabet_icon,
-                            "Alphabet",
+                            R.drawable.star,
+                            "Live Hands Detection",
                             onClick = {
-                                onCategoryClick(
-                                    allLettersAslPairs
-                                )
+                                onCategoryClick(1)
                             },
                             modifier = Modifier.weight(1f)
                         )
@@ -90,30 +85,10 @@ fun MatchCategories (
                         Spacer(modifier = Modifier.width(16.dp))
 
                         Category(
-                            R.drawable.number_icon,
-                            "Numbers",
+                            R.drawable.star,
+                            "AI Quiz",
                             onClick = {
-                                onCategoryClick(
-                                    allNumbersAslPair
-                                )
-                            },
-                            modifier = Modifier.weight(1f)
-                        )
-                    }
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 24.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Category(
-                            R.drawable.mixed_icon,
-                            "Mixed Mode",
-                            onClick = {
-                                onCategoryClick(
-                                    allLettersAslPairs + allNumbersAslPair
-                                )
+                                onCategoryClick(2)
                             },
                             modifier = Modifier.weight(1f)
                         )

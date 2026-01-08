@@ -63,12 +63,12 @@ fun UserSection(
             Row(
                 modifier = Modifier
                     .height(40.dp)
-                    .width(160.dp)
+                    .width(140.dp)
                     .background(
                         color = MaterialTheme.colorScheme.primaryContainer,
                         shape = RoundedCornerShape(10.dp)
                     )
-                    .padding(horizontal = 8.dp, vertical = 4.dp),
+                    .padding(horizontal = 4.dp, vertical = 4.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
