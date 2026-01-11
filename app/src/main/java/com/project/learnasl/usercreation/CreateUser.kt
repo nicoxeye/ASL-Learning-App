@@ -1,4 +1,4 @@
-package com.project.learnasl.user_creation
+package com.project.learnasl.usercreation
 
 import android.content.Context
 import androidx.compose.foundation.layout.Arrangement

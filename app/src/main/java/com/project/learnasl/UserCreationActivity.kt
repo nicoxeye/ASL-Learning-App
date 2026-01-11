@@ -8,7 +8,7 @@ import androidx.activity.viewModels
 import androidx.compose.ui.platform.LocalContext
 import com.project.learnasl.database.UserViewModel
 import com.project.learnasl.ui.theme.LearnASLTheme
-import com.project.learnasl.user_creation.CreateUser
+import com.project.learnasl.usercreation.CreateUser
 import com.project.learnasl.utils.UserViewModelHelper
 
 
