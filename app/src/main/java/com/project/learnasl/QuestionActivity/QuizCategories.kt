@@ -99,6 +99,23 @@ fun QuizCategories (
                             modifier = Modifier.weight(1f)
                         )
                     }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 24.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Category(
+                            R.drawable.mixed_icon,
+                            "Mixed Mode",
+                            onClick = {
+                                onCategoryClick(
+                                    allLettersAslPairs + allNumbersAslPair
+                                )
+                            },
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
                 }
             }
         }
