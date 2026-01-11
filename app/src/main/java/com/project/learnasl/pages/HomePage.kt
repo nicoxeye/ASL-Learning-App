@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.project.learnasl.Dashboard.components.Banner
 import com.project.learnasl.Dashboard.components.CardGrid
@@ -30,9 +31,10 @@ import com.project.learnasl.utils.startQuizActivity
 @Composable
 fun HomePage(username : String,
              experience: Int,
-             context : Context
 ) {
     LearnASLTheme {
+        val context = LocalContext.current
+
         // get one random card refreshing each time MainActivity is opened
         val ASLpair = allLettersAslPairs.shuffled().first()
         val label = ASLpair.label
