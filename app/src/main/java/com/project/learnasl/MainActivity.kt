@@ -1,5 +1,4 @@
 package com.project.learnasl
-import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -18,7 +17,6 @@ import com.project.learnasl.ui.theme.LearnASLTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -31,6 +29,7 @@ import com.project.learnasl.pages.UserPage
 import com.project.learnasl.database.UserViewModel
 import com.project.learnasl.pages.SettingsPage
 import com.project.learnasl.utils.UserViewModelHelper
+import com.project.learnasl.utils.startMainActivity
 import kotlin.getValue
 
 class MainActivity : ComponentActivity() {
@@ -41,28 +40,16 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
         setContent {
             //UserSection(viewModel = viewModel)
             LearnASLTheme {
-                val context = LocalContext.current
-                val user = viewModel.currentUser.value
-
-                // default if something goes wrong
-                var username = "Unknown"
-                var experience = 0
-                var level = 1
-
-                if (user != null) {
-                    username = user.name
-                    experience = user.experience
-                    level = user.level
-                }
 
                 val navItemList = listOf(
                     BottomNavItem("Home", Icons.Default.Home),
                     BottomNavItem("Profile", Icons.Default.Person),
-                    BottomNavItem("Settings", Icons.Default.Settings)
+                    // BottomNavItem("Settings", Icons.Default.Settings)
                 )
 
                 var selectedIndex by remember { mutableIntStateOf(0) }
@@ -83,9 +70,11 @@ class MainActivity : ComponentActivity() {
                                     icon = {
                                         Icon(imageVector = item.icon, contentDescription = "Icon")
                                     },
+                                    /*
                                     label = {
                                         Text(text = item.label)
                                     }
+                                     */
                                 )
                             }
                         }
@@ -95,10 +84,7 @@ class MainActivity : ComponentActivity() {
                     ContentScreen(
                         modifier = Modifier.padding(padding),
                         selectedIndex,
-                        username,
-                        experience,
-                        level,
-                        context = context
+                        viewModel = viewModel,
                     )
                 }
             }
@@ -110,15 +96,37 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun ContentScreen(modifier: Modifier,
                   selectedIndex : Int,
-                  username : String,
-                  experience: Int,
-                  level: Int,
-                  context : Context) {
+                  viewModel: UserViewModel) {
+
+    val context = LocalContext.current
+    val user by viewModel.currentUser
+    val username = user?.name ?: "Unknown"
+    val experience = user?.experience ?: 0
+    val level = user?.level ?: 1
 
     when (selectedIndex) {
-        0 -> HomePage(username, experience, context)
-        1 -> UserPage(username, experience, level)
-        2 -> SettingsPage(username, experience, level)
+        0 -> HomePage(username, experience)
+        1 -> UserPage(username, experience, level,
+            resetExp = {
+                viewModel.resetExp()
+                startMainActivity(context)
+            },
+            editName = { name ->
+                viewModel.editName(name)
+                startMainActivity(context)
+            })
+        /*
+        2 -> SettingsPage(
+            resetExp = {
+                viewModel.resetExp()
+                startMainActivity(context)
+            },
+            editName = { name ->
+                viewModel.editName(name)
+                startMainActivity(context)
+            }
+        )
+         */
     }
 
 }

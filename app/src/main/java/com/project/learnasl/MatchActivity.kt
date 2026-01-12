@@ -16,14 +16,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.project.learnasl.data.AslPair
 import com.project.learnasl.database.UserViewModel
-import com.project.learnasl.data.allLettersAslPairs
 import com.project.learnasl.match.MatchCategories
 import com.project.learnasl.ui.theme.LearnASLTheme
 import com.project.learnasl.utils.MATCH_EXP
 import com.project.learnasl.utils.UserViewModelHelper
 import com.project.learnasl.utils.startMainActivity
 import com.project.learnasl.utils.startMatchActivity
-import kotlinx.coroutines.selects.select
 import kotlin.getValue
 
 class MatchActivity : ComponentActivity() {
@@ -57,7 +55,8 @@ class MatchActivity : ComponentActivity() {
                     if (selectedPairs == null) {
                         // show categories
                         MatchCategories (
-                            onBackClick =  { finish(); startMainActivity(this) },
+                            onBackClick =  { finish();
+                                startMainActivity(this) },
                             onCategoryClick = { pairsFromCategory ->
                                 startNewMatch(pairsFromCategory)
                             }
@@ -67,13 +66,14 @@ class MatchActivity : ComponentActivity() {
                         MatchGame(pairs= selectedPairs!!,
                             // go back to categories
                             onBackClick =  {
-                                selectedPairs = null
+                                startMainActivity(this)
+                                finish()
                             },
                             //reset
                             // lets the user choose the category again but you can change it if you want to
                             onNewGame = {
-                                finish()
                                 startMatchActivity(this)
+                                finish()
                             },
                             onWin = {
                                 userViewModel.addExp(MATCH_EXP)

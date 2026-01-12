@@ -49,4 +49,14 @@ class UserViewModel(
         return repository.computeLvl()
     }
 
+    suspend fun resetExp() {
+        return repository.resetExp()
+    }
+
+    suspend fun editName(name: String){
+        return repository.editName(
+            name = name
+        )
+    }
+
 }

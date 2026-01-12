@@ -27,4 +27,16 @@ class UserRepository(private val dao: UserDao) {
         return lvl
     }
 
+    suspend fun resetExp() {
+        val user = dao.getUser() ?: return
+        user.experience = 0
+        user.computeLevel()
+        dao.updateUser(user)
+    }
+    suspend fun editName(name: String) {
+        val user = dao.getUser() ?: return
+        user.name = name
+        dao.updateUser(user)
+    }
+
 }

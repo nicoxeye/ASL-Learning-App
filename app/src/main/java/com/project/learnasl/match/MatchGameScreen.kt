@@ -108,8 +108,8 @@ fun MatchGame(
             modifier = Modifier
                 .fillMaxSize()
                 .weight(1f)
-                .padding(top = 32.dp),
-            horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterHorizontally),
+                .padding(top = 4.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterHorizontally),
             verticalAlignment = Alignment.CenterVertically
         ) {
 

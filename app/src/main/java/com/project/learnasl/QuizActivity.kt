@@ -14,7 +14,6 @@ import com.project.learnasl.QuestionActivity.QuestionActivity
 import com.project.learnasl.QuestionActivity.QuizCategories
 import com.project.learnasl.ui.theme.LearnASLTheme
 import com.project.learnasl.data.AslPair
-import com.project.learnasl.data.allLettersAslPairs
 
 const val question = "What sign is this?"
 class QuizActivity : ComponentActivity() {
