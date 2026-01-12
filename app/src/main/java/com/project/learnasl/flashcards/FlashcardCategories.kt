@@ -53,11 +53,10 @@ import com.project.learnasl.data.allNumbersAslPair
 fun FlashcardCategories(
     onBackClick: () -> Unit,
     onCategoryClick: (flashcards: List<Flashcard>, title: String) -> Unit,
-    // favourites
     favouriteFlashcards: List<Flashcard>
 ) {
     // TODO: connect flashcards with Room database
-    // (disclaimer: bc of no connection to the room database the favourites will always return a pop-up)
+    // ^ maybe in the future if we'll connect database with every feature
 
     // pop-up if there's no favourites
     var showEmptyFavouritesDialog by remember { mutableStateOf(false) }

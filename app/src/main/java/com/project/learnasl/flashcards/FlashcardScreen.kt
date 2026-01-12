@@ -43,11 +43,13 @@ fun FlashcardScreen(
     onBackClick: () -> Unit, // back to menu, -> change it to back to flashcardCategories
     initialFlashcards: List<Flashcard>, // list transmitted from flashcardCategories
     title: String, // title displayed next to the back button,
-    addExp: () -> Unit
+    addExp: () -> Unit,
+    viewModel: FlashcardsViewModel
 ) {
     val flashcardState = remember {
         FlashcardsState(
-            flashcards = initialFlashcards
+            flashcards = initialFlashcards,
+            onFavouriteToggled = { card -> viewModel.toggleFavourite(card)}
         )
     }
 
