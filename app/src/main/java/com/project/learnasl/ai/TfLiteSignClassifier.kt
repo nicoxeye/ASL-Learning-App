@@ -20,21 +20,21 @@ class TfLiteSignClassifier(
     private val interpreter: Interpreter
 
     // IMPORTANT: it matches the labels from the model that i took from the internet
-    private val labels = listOf(
-        "A","B","C","D","E","F","G","H","I","J","K","L",
-        "M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
-        "Delete", "Nothing", "Space"
-    )
-
-    // same labels as in training set in custom model
 //    private val labels = listOf(
-//        "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f",
-//        "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
-//        "w", "x", "y", "z"
+//        "A","B","C","D","E","F","G","H","I","J","K","L",
+//        "M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
+//        "Delete", "Nothing", "Space"
 //    )
 
+   //  same labels as in training set in custom model
+    private val labels = listOf(
+        "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f",
+        "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
+        "w", "x", "y", "z"
+    )
+
     init {
-        val model = FileUtil.loadMappedFile(context, "model.tflite")
+        val model = FileUtil.loadMappedFile(context, "model_compatible_2.tflite")
         //val model = FileUtil.loadMappedFile(context, "model_ASL.tflite")
         interpreter = Interpreter(model)
     }
