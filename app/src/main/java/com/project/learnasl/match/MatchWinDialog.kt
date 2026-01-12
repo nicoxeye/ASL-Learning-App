@@ -55,7 +55,7 @@ fun MatchWinDialog(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "! You won !",
+                        text = "You won",
                         fontWeight = FontWeight.Bold,
                         fontSize = 32.sp,
                         style = MaterialTheme.typography.labelLarge,

@@ -17,7 +17,6 @@ import com.project.learnasl.ui.theme.LearnASLTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -50,7 +49,7 @@ class MainActivity : ComponentActivity() {
                 val navItemList = listOf(
                     BottomNavItem("Home", Icons.Default.Home),
                     BottomNavItem("Profile", Icons.Default.Person),
-                    BottomNavItem("Settings", Icons.Default.Settings)
+                    // BottomNavItem("Settings", Icons.Default.Settings)
                 )
 
                 var selectedIndex by remember { mutableIntStateOf(0) }
@@ -107,7 +106,16 @@ fun ContentScreen(modifier: Modifier,
 
     when (selectedIndex) {
         0 -> HomePage(username, experience)
-        1 -> UserPage(username, experience, level)
+        1 -> UserPage(username, experience, level,
+            resetExp = {
+                viewModel.resetExp()
+                startMainActivity(context)
+            },
+            editName = { name ->
+                viewModel.editName(name)
+                startMainActivity(context)
+            })
+        /*
         2 -> SettingsPage(
             resetExp = {
                 viewModel.resetExp()
@@ -118,6 +126,7 @@ fun ContentScreen(modifier: Modifier,
                 startMainActivity(context)
             }
         )
+         */
     }
 
 }
