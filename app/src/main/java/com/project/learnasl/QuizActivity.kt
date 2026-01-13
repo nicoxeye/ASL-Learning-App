@@ -34,7 +34,7 @@ class QuizActivity : ComponentActivity() {
                             startActivity(intent)
                         }, // go back to mainActivity
                         onCategoryClick= { pairs ->
-                            selectedPairs = pairs // alphabet or numbers
+                            selectedPairs = pairs // alphabet or numbers or mixed
 
                             // full set that can be either 10 numbers or 26 letters from alphabet
                             val availableSet = pairs
@@ -49,14 +49,6 @@ class QuizActivity : ComponentActivity() {
                         }
                     )
                 }
-//                val intent = Intent(this, QuestionActivity::class.java)
-//                val gameAslPairs = allLettersAslPairs.shuffled().take(10) // take 10 sample questions
-//                intent.putParcelableArrayListExtra("list",ArrayList(questionsList(gameAslPairs)))
-//                startActivity(intent)
-//                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-//
-//                }
-
             }
         }
     }

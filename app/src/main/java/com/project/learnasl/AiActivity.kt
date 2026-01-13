@@ -216,7 +216,7 @@ class AiActivity : ComponentActivity() {
 
         // if the prediction of model is the same as the questions label +1 do question index:]
         LaunchedEffect(currentPrediction) {
-            if (currentPrediction != null && currentQuestion != null && currentPrediction == currentQuestion.label) {
+            if (currentPrediction != null && currentQuestion != null && currentPrediction == currentQuestion.label.lowercase()) {
                 indexQuestion++
             }
         }
