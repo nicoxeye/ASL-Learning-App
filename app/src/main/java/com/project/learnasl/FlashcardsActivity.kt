@@ -25,6 +25,7 @@ import com.project.learnasl.flashcards.FlashcardScreen
 import com.project.learnasl.flashcards.model.Flashcard
 import com.project.learnasl.data.AslPair
 import com.project.learnasl.database.UserViewModel
+import com.project.learnasl.flashcards.FlashcardsViewModel
 import com.project.learnasl.flashcards.model.FlashcardsState
 import com.project.learnasl.flashcards.model.allAppFlashcards
 import com.project.learnasl.ui.theme.LearnASLTheme
@@ -40,6 +41,8 @@ class FlashcardsActivity : ComponentActivity() {
             UserViewModelHelper.getFactory(application)
         }
 
+        val flashcardsViewModel: FlashcardsViewModel by viewModels()
+
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
@@ -52,31 +55,33 @@ class FlashcardsActivity : ComponentActivity() {
                    var selectedFlashcardsSet by remember { mutableStateOf<List<Flashcard>?>(null) }
                    var selectedTitle by remember { mutableStateOf<String?>(null)}
 
-                   val flashcardsState = remember {
-                       FlashcardsState(flashcards = allAppFlashcards)
-                   }
                    // CATEGORIES VIEW
                    if (selectedFlashcardsSet == null) {
                        FlashcardCategories(
                            onBackClick = {
                                // go back to Main Activity (homepage)
-                               intent = Intent(this, MainActivity::class.java)
-                               startActivity(intent)
+                               finish()
                            },
                            // pass title & list of flashcards (choosen set)
                            onCategoryClick = { flashcards, title ->
-                               selectedFlashcardsSet = flashcards
+                               if (title.contains("Favourites")) {
+                                   selectedFlashcardsSet = flashcardsViewModel.favouriteFlashcards
+                               }
+                               else {
+                                   selectedFlashcardsSet = flashcards
+                               }
                                selectedTitle = title
                                // after setting the states, compose should automatically start FlashcardScreen
                                // (since it's not be null anymore)
                            },
-                           favouriteFlashcards = flashcardsState.favouriteFlashcards
+                           favouriteFlashcards = flashcardsViewModel.favouriteFlashcards
                        )
                    }
                    else {
                        FlashcardScreen(
                            initialFlashcards = selectedFlashcardsSet!!, // !! operator bc we know it's != null here
                            title = selectedTitle!!,
+                           viewModel = flashcardsViewModel,
                            onBackClick = {
                                // after user clicks on the back button the state is cleaned to return to FlashcardCategories
                                selectedFlashcardsSet = null

@@ -10,19 +10,10 @@ import androidx.compose.runtime.toMutableStateList
 
 data class FlashcardsState (
     val flashcards: List<Flashcard>,
+    val onFavouriteToggled: (Flashcard) -> Unit,
     val alreadyKnow: SnapshotStateList<Flashcard> = mutableStateListOf(),
     val stillLearning: SnapshotStateList<Flashcard> = mutableStateListOf(),
 ) {
-    // all flashcards which stores isFavourite state
-    var allFlashcards by mutableStateOf(flashcards.toMutableStateList())
-        private set
-
-    // list of favourites needed for displaying in category "Favourites"
-    var favouriteFlashcards by mutableStateOf(
-        allFlashcards.filter { it.isFavourite }.toMutableStateList()
-    )
-        private set
-
     var isSwiping by mutableStateOf(false)
     var currentIndex by mutableIntStateOf(0)
         private set
@@ -77,41 +68,22 @@ data class FlashcardsState (
         }
     }
 
-    // toggles the isFavourite status of the flashcard
     fun toggleFavourite(card: Flashcard) {
-        // we use unique fields like imageRes and text to find the flashcard to update bc we don't have ID
-        // find the index of the flashcard in the pool of all sets that we have
-        val indexInAll = allFlashcards.indexOfFirst { it.imageRes == card.imageRes && it.text == card.text}
+        // since we don't use database & ID's, we have to check which flashcard the user picked (current)
+        // so we check the list and the card that matches imageRes and title is our current card
+        val indexInCurrent = currentFlashcards.indexOfFirst { it.imageRes == card.imageRes && it.text == card.text}
+        if (indexInCurrent != -1) {
+            // we make a copy of the card but we set isFavourite to the opposite of current state
+            val updatedCard = currentFlashcards[indexInCurrent].copy(isFavourite = !currentFlashcards[indexInCurrent].isFavourite)
 
-        // proceed only if the flashcard was found in the main list
-        if (indexInAll != -1) {
-            // get the current version of the flashcard from the main list
-            val currentCard = allFlashcards[indexInAll]
-            // create a newCard object by copying the current one and flipping the favourite status
-            val newCard = currentCard.copy(isFavourite = !currentCard.isFavourite)
-
-            // update the main list with newly created flashcard (newCard)
-            allFlashcards[indexInAll] = newCard
-
-            // check if the flashcard was added to favourites
-            if (newCard.isFavourite) {
-                // if it was -> add new object to the list of Favourites (in categories)
-                // but it doesn't work since i didn't connect the flashcards to the room database (we'll do)
-                favouriteFlashcards.add(newCard)
-            } else {
-                favouriteFlashcards.removeIf { it.imageRes == newCard.imageRes && it.text == newCard.text}
+            // we make sure UI refreshes right away (the star changes)
+            // we make a copy of the current list
+            currentFlashcards = currentFlashcards.toMutableList().apply {
+                this[indexInCurrent] = updatedCard // we update the freshly made list (our copy) with updated card
             }
 
-            // find the index of the card in the current active set (e.g. numbers, alphabet etc)
-            val indexInCurrent = currentFlashcards.indexOfFirst {it.imageRes == card.imageRes && it.text == card.text }
-            // if the card on top of the stack (so if it's the first on display) we update it
-            if (indexInCurrent != -1) {
-                // convert the current list to a mutable state list to trigger UI recomposition
-                currentFlashcards = currentFlashcards.toMutableStateList().apply{
-                    // replace the old card object with the new one (with the updated fav status)
-                    this[indexInCurrent] = newCard
-                }
-            }
+            // info send to ViewModel
+            onFavouriteToggled(updatedCard)
         }
     }
 }
