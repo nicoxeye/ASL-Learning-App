@@ -95,7 +95,6 @@ fun GreetingScreen(onTimeout: () -> Unit) {
             modifier = Modifier
                 .fillMaxSize()
                 .background(
-                    // TODO: custom gradient:D temporary, will change it in the future (prettify)
                     brush = Brush.verticalGradient(
                         colors = listOf(
                             MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
@@ -115,12 +114,9 @@ fun GreetingScreen(onTimeout: () -> Unit) {
                     R.drawable.logo_star,
                     modifier = Modifier
                         .padding(bottom = 64.dp)
-                        .scale(2f) // TODO: eyeing this for now, have to scale it later properly
+                        .scale(2f)
                 )
-                CustomText("LEARN")
-                CustomText("ASL")
-                CustomText("BY")
-                CustomText("PLAYING")
+                CustomText("SignWise")
             }
         }
     }
