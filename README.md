@@ -80,6 +80,16 @@ See the [open issues](https://github.com/github_username/repo_name/issues) for a
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## 🛠️ Future enhancements
+- [ ] difficulty levels in quiz & match game
+- [ ] connecting the rest of the features with Room Database
+- [ ] _expanding set database_ -> adding new categories such as greetings, cooking, traveling etc. including popular phrases like "Hello", "Thank you"
+- [ ] _enhancing AI model_ -> e.g. adding Hand Landmarker for better hand recognition
+- [ ] daily streaks
+- [ ] achievements
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Project Lead Team ❤️
 
 <a href="https://github.com/nicoxeye/ASL-Learning-App/graphs/contributors">
